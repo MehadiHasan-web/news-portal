@@ -81,7 +81,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('category.store') }}" method="POST"> @csrf
+            <form action="{{ route('subcategory.store') }}" method="POST"> @csrf
                 <div class="mb-3">
                   <label for="english" class="form-label">Category Name English</label>
                   <input type="text" class="form-control @error('category_en')is-invalid @enderror" id="cat_en" name="category_en" >

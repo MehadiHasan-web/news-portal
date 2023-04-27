@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\SubDistrictController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -36,6 +38,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     })->name('dashboard');
     Route::resource('category', CategoryController::class);
     Route::resource('subcategory', SubCategoryController::class);
+    Route::resource('district', DistrictController::class);
+    Route::resource('subdistrict', SubDistrictController::class);
 });
 
 

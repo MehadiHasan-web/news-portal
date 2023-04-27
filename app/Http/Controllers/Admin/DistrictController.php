@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Category;
+use App\Models\Admin\District;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class DistrictController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.modules.category.index', compact('categories'));
+        $districts = District::all();
+        return view('admin.modules.district.index', compact('districts'));
     }
 
     /**
@@ -31,22 +31,22 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'category_en' => 'required|unique:categories|max:55',
-            'category_bn' => 'required|unique:categories|max:55',
+            'district_en' => 'required|max:55',
+            'district_bn' => 'required|max:55',
         ]);
-        $data = new Category;
-        $data->category_en = $request->category_en;
-        $data->category_bn = $request->category_bn;
+        $data = new District;
+        $data->district_en = $request->district_en;
+        $data->district_bn = $request->district_bn;
         $data->save();
 
-        flash()->addSuccess('Category added successfully.');
+        flash()->addSuccess('District added successfully.');
         return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(District $district)
     {
         //
     }
@@ -56,31 +56,31 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $data = Category::where('id', $id)->first();
-        return view('admin.modules.category.edit', compact('data'));
+        $data = District::where('id', $id)->first();
+        return view('admin.modules.district.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, District $district)
     {
         // Validate the form data
         $request->validate([
-            'category_en' => 'required|max:55',
-            'category_bn' => 'required|max:55',
+            'district_en' => 'required|max:55',
+            'district_bn' => 'required|max:55',
         ]);
 
         // Update the category with the new data
-        $category->category_en = $request->category_en;
-        $category->category_bn = $request->category_bn;
-        $category->save();
+        $district->district_en = $request->district_en;
+        $district->district_bn = $request->district_bn;
+        $district->save();
 
         // Add a success message to the session
-        flash()->addSuccess('Category updated successfully.');
+        flash()->addSuccess('District updated successfully.');
 
         // Redirect back to the index page
-        return redirect()->route('category.index');
+        return redirect()->route('district.index');
     }
 
     /**
@@ -88,9 +88,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-
-        Category::where('id', $id)->delete();
-        flash()->addSuccess('Category deleted successfully.');
+        District::where('id', $id)->delete();
+        flash()->addSuccess('District deleted successfully.');
         return redirect()->back();
     }
 }

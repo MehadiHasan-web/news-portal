@@ -16,19 +16,19 @@
 <div class="col-6 m-auto shadow-sm rounded">
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('category.update', $data->id) }}" method="POST">
+            <form action="{{ route('district.update', $data->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
-                    <label for="english" class="form-label">Category Name English</label>
-                    <input value="{{ $data->category_en }}" type="text" class="form-control" id="cat_en" name="category_en" required>
+                    <label for="english" class="form-label">District Name English</label>
+                    <input value="{{ $data->district_en }}" type="text" class="form-control" id="cat_en" name="district_en" required>
                 </div>
                 <div class="mb-3">
-                    <label for="bangla" class="form-label">Category Name Bangla</label>
-                    <input value="{{ $data->category_bn }}" type="text" class="form-control" id="bangla" name="category_bn" required>
+                    <label for="bangla" class="form-label">District Name Bangla</label>
+                    <input value="{{ $data->district_bn }}" type="text" class="form-control" id="bangla" name="district_bn" required>
                 </div>
                 <div>
-                    <a href="{{ route('category.index') }}" class="btn btn-dark">Back</a>
+                    <a href="{{ route('district.index') }}" class="btn btn-dark">Back</a>
                     <button type="submit" class="btn btn-primary float-end">Update</button>
                 </div>
             </form>
