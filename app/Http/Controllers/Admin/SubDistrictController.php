@@ -95,4 +95,12 @@ class SubDistrictController extends Controller
     {
         //
     }
+
+    // api request
+    public function getSubdistricts(int $districtId)
+    {
+        $subdistricts = SubDistrict::select('id', 'subdistrict_en', 'subdistrict_bn')->where('district_id', $districtId)->get();
+
+        return response()->json($subdistricts);
+    }
 }

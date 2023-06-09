@@ -102,4 +102,12 @@ class SubCategoryController extends Controller
         flash()->addSuccess('Subcategory deleted successfully.');
         return redirect()->back();
     }
+
+    // api request
+    public function getSubcategories(int $categoryId)
+    {
+        $subcategories = Subcategory::select('id', 'sub_category_en', 'sub_category_bn')->where('category_id', $categoryId)->get();
+
+        return response()->json($subcategories);
+    }
 }

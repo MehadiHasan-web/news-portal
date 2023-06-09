@@ -8,7 +8,7 @@
     </div>
 </div> --}}
 
-<h1 class="mt-4">Categores Tables</h1>
+<h1 class="mt-4">Post Tables</h1>
 
 <div class=" mb-4">
     <div class="d-flex justify-content-between">
@@ -28,31 +28,42 @@
         <table id="datatablesSimple">
             <thead>
                 <tr>
-                    <th>Category Name English</th>
-                    <th>Category Name Bangla</th>
+                    <th>Title</th>
+                    <th>Category Bangla</th>
+                    <th>Sub Category Bangla</th>
+                    <th>Thumbnail</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Category Name English</th>
-                    <th>Category Name Bangla</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
+                    <th>Thumbnail</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
-                @foreach($categories as $category)
+                @foreach($post as $data)
                 <tr>
-                    <td>{{ $category->category_en }}</td>
-                    <td>{{ $category->category_bn }}</td>
+                    <td>{{ $data->title_bn }}</td>
+                    <td>{{ $data->category_bn }}</td>
+                    <td>{{ $data->category_bn }}</td>
+                    <td>
+                        <img src="{{ URL::to($data->image) }}" style="width: 80px; height:70px;" alt="" class="border-rounded">
+                    </td>
+                    <td>{{ $data->post_date }}</td>
                     <td >
-                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-info btn-sm "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <a href="{{ route('post.edit', $data->id) }}" class="btn btn-info btn-sm "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                           </svg>
                         </a>
 
-                        <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
+                        <form action="{{ route('post.destroy', $data->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm " type="submit" onclick="return confirm('Are you sure you want to delete this category?')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -70,42 +81,6 @@
         </table>
     </div>
 </div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Category</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{{ route('category.store') }}" method="POST"> @csrf
-                <div class="mb-3">
-                  <label for="english" class="form-label">Category Name English</label>
-                  <input type="text" class="form-control @error('category_en')is-invalid @enderror" id="cat_en" name="category_en" >
-                    @error('category_en')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                  <label for="bangla" class="form-label">Category Name Bangla</label>
-                  <input type="text" class="form-control @error('category_en')is-invalid @enderror" id="bangla" name="category_bn" >
-                    @error('category_en')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-primary float-end">Submit</button>
-              </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 

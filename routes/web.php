@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubDistrictController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -37,9 +39,12 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         return view('admin/includes/dashboard');
     })->name('dashboard');
     Route::resource('category', CategoryController::class);
+    Route::get('subcategories/{categoryId}', [SubCategoryController::class, 'getSubcategories']);
     Route::resource('subcategory', SubCategoryController::class);
+    Route::get('subdistricts/{districtId}', [SubDistrictController::class, 'getSubdistricts']);
     Route::resource('district', DistrictController::class);
     Route::resource('subdistrict', SubDistrictController::class);
+    Route::resource('post', PostController::class);
 });
 
 

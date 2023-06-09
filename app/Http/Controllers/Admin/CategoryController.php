@@ -39,6 +39,8 @@ class CategoryController extends Controller
         $data->category_bn = $request->category_bn;
         $data->save();
 
+
+
         flash()->addSuccess('Category added successfully.');
         return redirect()->back();
     }
