@@ -20,7 +20,7 @@
 </div>
 
 <div class="d-flex justify-content-center">
-    <form class="col-8" method="POST" action="{{ route('settings.update',$socialLinks->id) }}">
+    <form class="col-8" method="POST" action="{{ route('settings.update',$socialLinks->id ?? '') }}">
         @method('post')
         @csrf
 

@@ -16,7 +16,7 @@ class SettingController extends Controller
         $socialLinks = DB::table('socials')->first();
         return view('admin.modules.settings.social', compact('socialLinks'));
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $id = null)
     {
         $request->validate([
             'facebook' => 'nullable',
@@ -26,10 +26,23 @@ class SettingController extends Controller
             'linkedin' => 'nullable',
         ]);
 
-        DB::table('socials')->where('id', $id)->update($request->only(['facebook', 'twitter', 'youtube', 'instagram', 'linkedin']));
+        if (!$id) {
+            $data = [
+                'facebook' => $request->input('facebook'),
+                'twitter' => $request->input('twitter'),
+                'youtube' => $request->input('youtube'),
+                'instagram' => $request->input('instagram'),
+                'linkedin' => $request->input('linkedin'),
+            ];
 
-        flash()->addSuccess('Update Successful');
-        return redirect()->back();
+            DB::table('socials')->insert($data);
+            flash()->addSuccess('Created Successful');
+            return redirect()->back();
+        } else {
+            DB::table('socials')->where('id', $id)->update($request->only(['facebook', 'twitter', 'youtube', 'instagram', 'linkedin']));
+            flash()->addSuccess('Update Successful');
+            return redirect()->back();
+        }
     }
 
     // sco settings
@@ -39,7 +52,7 @@ class SettingController extends Controller
         return view('admin.modules.settings.sco', compact('scos'));
     }
 
-    public function scoUpdate(Request $request, $id)
+    public function scoUpdate(Request $request, $id = null)
     {
         // dd($request->all());
         $request->validate([
@@ -52,10 +65,26 @@ class SettingController extends Controller
             'alexa_analytics' => 'nullable',
         ]);
 
-        DB::table('scos')->where('id', $id)->update($request->only(['meta_author', 'meta_title', 'meta_keyword', 'meta_description', 'google_analytics', 'google_verification', 'alexa_analytics']));
+        if (!$id) {
+            $data = [
+                'meta_author' => $request->input('meta_author'),
+                'meta_title' => $request->input('meta_title'),
+                'meta_keyword' => $request->input('meta_keyword'),
+                'meta_description' => $request->input('meta_description'),
+                'google_analytics' => $request->input('google_analytics'),
+                'google_verification' => $request->input('google_verification'),
+                'alexa_analytics' => $request->input('alexa_analytics'),
+            ];
 
-        flash()->addSuccess('Update Successful');
-        return redirect()->back();
+            DB::table('scos')->insert($data);
+            flash()->addSuccess('SCO created successful');
+            return redirect()->back();
+        } else {
+            DB::table('scos')->where('id', $id)->update($request->only(['meta_author', 'meta_title', 'meta_keyword', 'meta_description', 'google_analytics', 'google_verification', 'alexa_analytics']));
+
+            flash()->addSuccess('Update Successful');
+            return redirect()->back();
+        }
     }
 
     //namaz settings
@@ -67,22 +96,36 @@ class SettingController extends Controller
         return view('admin.modules.settings.namaz', compact('namaz'));
     }
 
-    public function namazUpdate(Request $request, $id)
+    public function namazUpdate(Request $request, $id = null)
     {
         // dd($request->all());
         $request->validate([
-            'fajr' => 'nullable',
-            'johr' => 'nullable',
-            'asor' => 'nullable',
-            'magrib' => 'nullable',
-            'esha' => 'nullable',
-            'jummah' => 'nullable',
+            'fajr' => 'required',
+            'johr' => 'required',
+            'asor' => 'required',
+            'magrib' => 'required',
+            'esha' => 'required',
+            'jummah' => 'required',
         ]);
 
-        DB::table('namaz')->where('id', $id)->update($request->only(['fajr', 'johr', 'asor', 'magrib', 'esha', 'jummah']));
+        if (!$id) {
+            $data = [
+                'fajr' => $request->input('fajr'),
+                'johr' => $request->input('johr'),
+                'asor' => $request->input('asor'),
+                'magrib' => $request->input('magrib'),
+                'esha' => $request->input('esha'),
+                'jummah' => $request->input('jummah'),
+            ];
 
-        flash()->addSuccess('Update Successful');
-        return redirect()->back();
+            DB::table('namaz')->insert($data);
+            flash()->addSuccess('Namaz timings Create successfully.');
+            return redirect()->back();
+        } else {
+            DB::table('namaz')->where('id', $id)->update($request->only(['fajr', 'johr', 'asor', 'magrib', 'esha', 'jummah']));
+            flash()->addSuccess('Update Successful');
+            return redirect()->back();
+        }
     }
 
     // Live Tv setting
@@ -92,23 +135,36 @@ class SettingController extends Controller
         // dd($livetv);
         return view('admin.modules.settings.livetv', compact('livetv'));
     }
-    public function liveUpdate(Request $request, $id)
+    public function liveUpdate(Request $request, $id = null)
     {
+
         $request->validate([
             'embed_code' => 'nullable',
         ]);
-        DB::table('livetv')->where('id', $id)->update($request->only(['embed_code']));
 
-        flash()->addSuccess('Embed Code updated Successful');
-        return redirect()->back();
+        if (!$id) {
+            DB::table('livetv')->insert(['embed_code' => $request->input('embed_code'),]);
+            flash()->addSuccess('New data created successfully.');
+            return redirect()->back();
+        } else {
+            DB::table('livetv')->where('id', $id)->update($request->only(['embed_code']));
+
+            flash()->addSuccess('Embed Code updated Successful');
+            return redirect()->back();
+        }
     }
     // livetv active
-    public function LiveActive($id)
+    public function LiveActive($id = null)
     {
         // dd($id);
-        DB::table('livetv')->where('id', $id)->update(['status' => 1]);
-        flash()->addSuccess('Live TV on your website');
-        return redirect()->back();
+        if (!$id) {
+            flash()->addError('The Embed Code field is required when no other timings are provided.');
+            return redirect()->back();
+        } else {
+            DB::table('livetv')->where('id', $id)->update(['status' => 1]);
+            flash()->addSuccess('Live TV on your website');
+            return redirect()->back();
+        }
     }
     // deactivate
     public function LiveDeactivate($id)
@@ -128,23 +184,34 @@ class SettingController extends Controller
         return view('admin.modules.settings.notice', compact('notice'));
     }
     // notice update
-    public function noticeUpdate(Request $request, $id)
+    public function noticeUpdate(Request $request, $id = null)
     {
         $request->validate([
-            'notice' => 'nullable',
+            'notice' => 'required',
         ]);
-        DB::table('notices')->where('id', $id)->update($request->only(['notice']));
-
-        flash()->addSuccess('Notice updated Successful');
-        return redirect()->back();
+        if (!$id) {
+            DB::table('notices')->insert(['notice' => $request->input('notice'),]);
+            flash()->addSuccess('New notice created successfully.');
+            return redirect()->back();
+        } else {
+            DB::table('notices')->where('id', $id)->update($request->only(['notice']));
+            flash()->addSuccess('Notice updated Successful');
+            return redirect()->back();
+        }
     }
     // notice active
-    public function noticeActive($id)
+    public function noticeActive($id = null)
     {
-        // dd($id);
-        DB::table('notices')->where('id', $id)->update(['status' => 1]);
-        flash()->addSuccess('Notice active your website.');
-        return redirect()->back();
+
+        if (!$id) {
+            flash()->addError('You need to notice it first');
+            return redirect()->back();
+        } else {
+            // dd($id);
+            DB::table('notices')->where('id', $id)->update(['status' => 1]);
+            flash()->addSuccess('Notice active your website.');
+            return redirect()->back();
+        }
     }
     // notice deactivate
     public function noticeDeactivate($id)

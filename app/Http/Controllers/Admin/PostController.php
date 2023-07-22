@@ -106,7 +106,7 @@ class PostController extends Controller
             echo "Failed to upload image.";
         }
 
-        return redirect()->back();
+        return redirect()->route('post.index');
     }
 
     /**

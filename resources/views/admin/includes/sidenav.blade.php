@@ -67,7 +67,7 @@
             <div class="collapse" id="gallery" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="{{ route('photo.index') }}">Photo Gallery</a>
-                    <a class="nav-link" href="">Video Gallery</a>
+                    <a class="nav-link" href="{{ route('video.index') }}">Video Gallery</a>
                 </nav>
             </div>
 

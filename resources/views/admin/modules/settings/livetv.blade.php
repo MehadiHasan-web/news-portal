@@ -23,7 +23,7 @@
           <div class="d-flex justify-content-between">
             <h5 class="card-title">Embed Code</h5>
 
-            @if ($livetv->status == 1)
+            @if (isset($livetv) && $livetv->status == 1) 
             <a class="btn btn-danger" href="{{ route('settings.LiveDeactivate', $livetv->id ?? '') }}" role="button">Dactive</a>
             @else
             <a class="btn btn-primary" href="{{ route('settings.LiveActive', $livetv->id ?? '') }}" role="button">Active</a>
@@ -39,7 +39,7 @@
                 <div class="form-group mt-3">
                     <textarea class="form-control" name="embed_code" id="embed_code" cols="30" rows="10">{{ $livetv->embed_code ?? '' }}</textarea>
                 </div>
-                @if ($livetv->status==1 )
+                @if (isset($livetv) && $livetv->status == 1)
                 <p class="text-primary">Now Live TV are active</p>
                 @else
                 <p class="text-danger">Now Live TV are Deactive</p>

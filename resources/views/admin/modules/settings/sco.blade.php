@@ -13,7 +13,7 @@
 </div>
 
 <div class="d-flex justify-content-center">
-    <form class="col-8" method="POST" action="{{ route('settings.scoUpdate',$scos->id) }}">
+    <form class="col-8" method="POST" action="{{ route('settings.scoUpdate',$scos->id ?? '') }}">
         @method('post')
         @csrf
 

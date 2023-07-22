@@ -23,7 +23,7 @@
           <div class="d-flex justify-content-between">
             <h5 class="card-title">Notice</h5>
 
-            @if ($notice->status == 1)
+            @if (isset($notice) && $notice->status == 1)
             <a class="btn btn-danger" href="{{ route('settings.noticeDeactivate', $notice->id ?? '') }}" role="button">Dactive</a>
             @else
             <a class="btn btn-primary" href="{{ route('settings.noticeActive', $notice->id ?? '') }}" role="button">Active</a>
@@ -37,9 +37,14 @@
                 @csrf
 
                 <div class="form-group mt-3">
-                    <textarea class="form-control" name="notice" id="notice" cols="30" rows="10">{{ $notice->notice ?? '' }}</textarea>
+                    <textarea class="form-control @error('notice')is-invalid @enderror" name="notice" id="notice" cols="30" rows="10">{{ $notice->notice ?? '' }}</textarea>
+                    @error('notice')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
-                @if ($notice->status==1 )
+                @if (isset($id)&&$notice->status==1 )
                 <p class="text-primary">Now notice are active</p>
                 @else
                 <p class="text-danger">Now notice are Deactive</p>
