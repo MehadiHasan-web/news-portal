@@ -158,6 +158,7 @@
                   <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
+                  <a class="btn btn-dark " href="{{ route('post.index') }}">Back</a>
                 </div>
 
               </form>

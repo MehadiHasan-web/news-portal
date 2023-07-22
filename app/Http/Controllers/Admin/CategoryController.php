@@ -65,18 +65,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        // Validate the form data
+        // dd($id);
         $request->validate([
             'category_en' => 'required|max:55',
             'category_bn' => 'required|max:55',
         ]);
-
-        // Update the category with the new data
-        $category->category_en = $request->category_en;
-        $category->category_bn = $request->category_bn;
-        $category->save();
+        Category::where('id', $id)->update($request->only(['category_en', 'category_bn']));
 
         // Add a success message to the session
         flash()->addSuccess('Category updated successfully.');

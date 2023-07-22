@@ -95,14 +95,14 @@ class PostController extends Controller
         $image_path = "public/postimages/" . $image_name;
 
         if ($image->isValid() && $image->move("public/postimages/", $image_name)) {
-            // Resize and save the image
+
             $resized_image = Image::make($image_path)->resize(500, 310)->save($image_path);
-            // Set the post image path
+
             $post->image = $image_path;
             $post->save();
             flash()->addSuccess('Post added successfully.');
         } else {
-            // Handle the error
+
             echo "Failed to upload image.";
         }
 
@@ -112,9 +112,18 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        //
+        // $post = Post::findOrFail($id);
+        $id = explode(',', $id);
+        $post = DB::table('posts')
+            ->join('categories', 'posts.cat_id', 'categories.id')
+            ->join('sub_categories', 'posts.subcat_id', 'sub_categories.id')
+            ->select('posts.*', 'categories.category_bn', 'sub_categories.sub_category_bn')
+            ->whereIn('posts.id', $id)
+            ->get();
+        dd($post);
+        return view('admin.modules.posts.show', compact('post'));
     }
 
     /**

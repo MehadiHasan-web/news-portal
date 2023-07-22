@@ -43,6 +43,35 @@
                 </nav>
             </div>
 
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#social" aria-expanded="false" aria-controls="social">
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Settings
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="social" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{{ route('settings.social'); }}">Social Settings</a>
+                    <a class="nav-link" href="{{ route('settings.sco'); }}">SCO Settings</a>
+                    <a class="nav-link" href="{{ route('settings.namaz'); }}">Prayer Time Setting</a>
+                    <a class="nav-link" href="{{ route('settings.live'); }}">Live Tv</a>
+                    <a class="nav-link" href="{{ route('settings.notice'); }}">Notice</a>
+                    <a class="nav-link" href="{{ route('importantWebsite.index'); }}">Website</a>
+                </nav>
+            </div>
+
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#gallery" aria-expanded="false" aria-controls="gallery">
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Gallery
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="gallery" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{{ route('photo.index') }}">Photo Gallery</a>
+                    <a class="nav-link" href="">Video Gallery</a>
+                </nav>
+            </div>
+
+
 
 
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
