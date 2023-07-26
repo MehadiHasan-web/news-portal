@@ -29,9 +29,15 @@ class PostController extends Controller
         //     ->join('sub_districts', 'posts.subdist_id', 'sub_districts.id')
         //     ->get();
 
+        // $post = DB::table('posts')
+        //     ->join('categories', 'posts.cat_id', 'categories.id')
+        //     ->join('sub_categories', 'posts.subcat_id', 'sub_categories.id')
+        //     ->select('posts.*', 'categories.category_bn', 'sub_categories.sub_category_bn')
+        //     ->get();
+
         $post = DB::table('posts')
-            ->join('categories', 'posts.cat_id', 'categories.id')
-            ->join('sub_categories', 'posts.subcat_id', 'sub_categories.id')
+            ->leftJoin('categories', 'posts.cat_id', '=', 'categories.id')
+            ->leftJoin('sub_categories', 'posts.subcat_id', '=', 'sub_categories.id')
             ->select('posts.*', 'categories.category_bn', 'sub_categories.sub_category_bn')
             ->get();
 
@@ -63,7 +69,7 @@ class PostController extends Controller
             'subcategory' => 'nullable|integer',
             'dist_id' => 'required|integer',
             'subdistrict' => 'nullable',
-            // 'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tags_bn' => 'nullable|string|max:255',
             'tags_en' => 'nullable|string|max:255',
             'details_bn' => 'required|string',
@@ -200,7 +206,7 @@ class PostController extends Controller
             flash()->addSuccess('Post updated successfully.');
         }
 
-        $post->save();
+        $post->update();
         return redirect()->route('post.index');
     }
 

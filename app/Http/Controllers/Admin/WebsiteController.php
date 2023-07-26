@@ -33,10 +33,12 @@ class WebsiteController extends Controller
     {
         $validated = $request->validate([
             'website_name' => 'required|unique:websites',
+            'website_name_bn' => 'required|unique:websites',
             'website_link' => 'required|unique:websites',
         ]);
         $data = new Website;
         $data->website_name = $request->website_name;
+        $data->website_name_bn = $request->website_name_bn;
         $data->website_link = $request->website_link;
         $data->save();
 
@@ -71,10 +73,11 @@ class WebsiteController extends Controller
         // Validate the form data
         $request->validate([
             'website_name' => 'nullable',
+            'website_name_bn' => 'nullable',
             'website_link' => 'nullable',
         ]);
 
-        Website::where('id', $id)->update($request->only(['website_name', 'website_link']));
+        Website::where('id', $id)->update($request->only(['website_name', 'website_link', 'website_name_bn']));
 
 
         // Add a success message to the session

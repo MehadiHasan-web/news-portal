@@ -188,13 +188,18 @@ class SettingController extends Controller
     {
         $request->validate([
             'notice' => 'required',
+            'notice_bn' => 'required',
         ]);
+        // dd($request->all());
         if (!$id) {
-            DB::table('notices')->insert(['notice' => $request->input('notice'),]);
+            DB::table('notices')->insert([
+                'notice' => $request->input('notice'),
+                'notice_bn' => $request->input('notice_bn'),
+            ]);
             flash()->addSuccess('New notice created successfully.');
             return redirect()->back();
         } else {
-            DB::table('notices')->where('id', $id)->update($request->only(['notice']));
+            DB::table('notices')->where('id', $id)->update($request->only(['notice', 'notice_bn']));
             flash()->addSuccess('Notice updated Successful');
             return redirect()->back();
         }

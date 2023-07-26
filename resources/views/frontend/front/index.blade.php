@@ -1,15 +1,64 @@
 @extends('frontend.master.master')
  @section('content')
 	<!-- date-start -->
+
+
+    @php
+    function bn_date($str)
+    {
+    $en = array(1,2,3,4,5,6,7,8,9,0);
+    $bn = array('১','২','৩','৪','৫','৬','৭',' ৮','৯','০');
+    $str = str_replace($en, $bn, $str);
+    $en = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', ' December');
+    $en_short = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+    $bn = array( 'জানুয়ারী', 'ফেব্রুয়ারী', 'মার্চ', 'এরিল', 'মে', 'জুন', 'জুলাই', 'অগাস্ট', 'সেপটেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর');
+    $str = str_replace( $en, $bn, $str);
+    $str = str_replace( $en_short, $bn, $str);
+    $en = array('Saturday','Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday');
+    $en_short = array('Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri');
+    $bn_short = array('শনি', 'রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র');
+    $bn = array('শনিবার','রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার' );
+    $str = str_replace( $en, $bn, $str);
+    $str = str_replace($en_short, $bn_short, $str);
+    $en = array('am', 'pm');
+    $bn = array( 'পূর্বাহ্ন', 'অপরাহ্ন' );
+    $str = str_replace($en, $bn, $str);
+    $str = str_replace( $en_short, $bn_short, $str);
+    $en = array('১২', '২৪');
+    $bn = array('৬','১২');
+    $str = str_replace( $en, $bn, $str);
+    return $str;
+    }
+    @endphp
+
     <section>
     	<div class="container-fluid">
     		<div class="row">
     			<div class="col-md-12 col-sm-12">
 					<div class="date">
 						<ul>
-							<li><i class="fa fa-map-marker" aria-hidden="true"></i>  ঢাকা </li>
-							<li><i class="fa fa-calendar" aria-hidden="true"></i> ০৩:৩২ অপরাহ্ন, বৃহস্পতিবার, ০৭ মে ২০২০, ২৪ বৈশাখ ১৪২৭, ১৩ রমজান ১৪৪১ </li>
-							<li><i class="fa fa-clock-o" aria-hidden="true"></i> আপডেট ৫ মিনিট আগে</li>
+                            <script type="text/javascript" src="http://bangladate.appspot.com/index2.php"></script>
+							<li><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                @if (session()->get('lang')=='bangla')
+                                ঢাকা
+                                @else
+                                  Dhaka
+                                @endif
+                            </li>
+							<li><i class="fa fa-calendar" aria-hidden="true"></i>
+                                @if (session()->get('lang')=='bangla')
+                                {{ bn_date(date('d M Y,l,h:i:s a'))}}
+                                @else
+                                {{ date('d M Y,l,h:i:s a')}}
+                                @endif
+                            </li>
+							<li><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                @if (session()->get('lang')=='bangla')
+                                আপডেট ৫ মিনিট আগে
+                                @else
+                                Updated 5 minutes ago
+                                @endif
+                            </li>
 						</ul>
 
 					</div>
@@ -19,20 +68,31 @@
     </section><!-- /.date-close -->
 
 	<!-- notice-start -->
+@if (isset($notice) && $notice->status == 1)
 
     <section>
     	<div class="container-fluid">
 			<div class="row scroll">
 				<div class="col-md-2 col-sm-3 scroll_01 ">
-					শিরোনাম :
+					@if (session()->get('lang')=='bangla')
+                    শিরোনাম :
+                    @else
+                    Title :
+                    @endif
 				</div>
 				<div class="col-md-10 col-sm-9 scroll_02">
-					<marquee>wellcome to our website...</marquee>
+					<marquee>
+                        @if (session()->get('lang')=='bangla')
+                            {{ $notice->notice_bn }}
+                        @else
+                            {{ $notice->notice }}
+                        @endif
+                    </marquee>
 				</div>
 			</div>
     	</div>
     </section>
-
+@endif
 	<!-- 1st-news-section-start -->
 	<section class="news-section">
 		<div class="container-fluid">
@@ -42,63 +102,39 @@
 						<div class="col-md-1 col-sm-1 col-lg-1"></div>
 						<div class="col-md-10 col-sm-10">
 							<div class="lead-news">
-								<div class="service-img"><a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a></div>
+								<div class="service-img"><a href="#"><img src="{{ URL::to($latestPost->image) }}" alt="{{ $latestPost->title_bn }}"></a></div>
 								<div class="content">
-								<h4 class="lead-heading-01"><a href="#">রোহিঙ্গা সংকট নিয়ে দ্বিচারিতা সহ্য করা হবে না : কাদের</a> </h4>
+								<h4 class="lead-heading-01"><a href="#">
+                                    @if (session()->get('lang')=='bangla')
+                                    {{ $latestPost->title_bn }}
+                                    @else
+                                    {{ $latestPost->title_en }}
+                                    @endif
+                                </a> </h4>
 								</div>
 							</div>
 						</div>
 
 					</div>
 						<div class="row">
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-									<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3">
-									<div class="top-news">
-										<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-										<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-								</div>
+
+
+                            @foreach($first_section as $post)
+                            <div class="col-md-3 col-sm-3">
+                                <div class="top-news">
+                                    <a href="#"><img src="{{ URL::to($post->image) }}" alt="{{ $post->title_en }}"></a>
+                                    <h4 class="heading-02"><a href="#">
+                                        @if (session()->get('lang')=='bangla')
+                                        {{  $post->title_bn }}
+                                        @else
+                                        {{ $post->title_en }}
+                                        @endif
+                                    </a> </h4>
+                                </div>
+                            </div>
+                            @endforeach
+
+
 							</div>
 
 					<!-- add-start -->
@@ -112,46 +148,96 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-6">
 							<div class="bg-one">
-								<div class="cetagory-title"><a href="#">খেলাধুলা <span>আরও <i class="fa fa-angle-double-right" aria-hidden="true"></i></span></a></div>
+								<div class="cetagory-title"><a href="#">
+                                    @if (session()->get('lang')=='bangla')
+                                    {{ $firstCategory->category_bn }}
+                                    @else
+                                    {{ $firstCategory->category_en }}
+                                    @endif
+                                    <span>
+                                    @if (session()->get('lang')=='bangla')
+                                    আরও
+                                    @else
+                                    More
+                                    @endif
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i></span></a></div>
 								<div class="row">
 									<div class="col-md-6 col-sm-6">
-										<div class="top-news">
-											<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-											<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+										@if (isset($big_thumcat) && $big_thumcat->big_thumbnail==1)
+                                        <div class="top-news">
+											<a href="#"><img src="{{ asset($big_thumcat->image) }}" alt="Notebook"></a>
+											<h4 class="heading-02"><a href="#">
+                                                @if (session()->get('lang')=='bangla')
+                                                {{ $big_thumcat->title_bn }}
+                                                @else
+                                                {{ $big_thumcat->title_bn }}
+                                                @endif
+                                            </a> </h4>
 										</div>
+                                        @endif
 									</div>
 									<div class="col-md-6 col-sm-6">
-										<div class="image-title">
-											<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-											<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+                                        @foreach ($limitpostbycat as $item)
+                                        <div class="image-title">
+											<a href="#"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
+											<h4 class="heading-03"><a href="#">
+                                                @if (session()->get('lang')=='bangla')
+                                                {{ $item->title_bn }}
+                                                @else
+                                                {{ $item->title_bn }}
+                                                @endif
+                                            </a> </h4>
 										</div>
-										<div class="image-title">
-											<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-											<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-										</div>
+                                        @endforeach
+
+
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6">
 							<div class="bg-one">
-								<div class="cetagory-title"><a href="#">খেলাধুলা <span>আরও <i class="fa fa-angle-double-right" aria-hidden="true"></i></span></a></div>
+								<div class="cetagory-title"><a href="#">
+                                    @if (session()->get('lang')=='bangla')
+                                    {{ $secondCategory->category_bn }}
+                                    @else
+                                    {{ $secondCategory->category_en }}
+                                    @endif
+                                    <span>
+                                    @if (session()->get('lang')=='bangla')
+                                    আরও
+                                    @else
+                                    More
+                                    @endif
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i></span></a></div>
 								<div class="row">
 									<div class="col-md-6 col-sm-6">
-										<div class="top-news">
-											<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-											<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+										@if (isset($big_thum2ndCat) && $big_thum2ndCat->big_thumbnail==1)
+                                        <div class="top-news">
+											<a href="#"><img src="{{ asset($big_thum2ndCat->image) }}" alt="Notebook"></a>
+											<h4 class="heading-02"><a href="#">
+                                                @if (session()->get('lang')=='bangla')
+                                                {{ $big_thum2ndCat->title_bn }}
+                                                @else
+                                                {{ $big_thum2ndCat->title_bn }}
+                                                @endif
+                                            </a> </h4>
 										</div>
+                                        @endif
 									</div>
 									<div class="col-md-6 col-sm-6">
-										<div class="image-title">
-											<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-											<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+                                        @foreach ($limitpostby2ndCat as $item)
+                                        <div class="image-title">
+											<a href="#"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
+											<h4 class="heading-03"><a href="#">
+                                                @if (session()->get('lang')=='bangla')
+                                                {{ $item->title_bn }}
+                                                @else
+                                                {{ $item->title_bn }}
+                                                @endif
+                                            </a> </h4>
 										</div>
-										<div class="image-title">
-											<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-											<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-										</div>
+                                        @endforeach
 									</div>
 								</div>
 							</div>
@@ -167,12 +253,21 @@
 					</div><!-- /.add-close -->
 
 					<!-- youtube-live-start -->
-					<div class="cetagory-title-03">লাইভ টিভি </div>
-					<div class="photo">
-						<div class="embed-responsive embed-responsive-16by9 embed-responsive-item" style="margin-bottom:5px;">
-							<iframe width="729" height="410" src="https://www.youtube.com/embed/8HnnNf-3VuE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    @if (isset($livetv) && $livetv->status==1)
+                        <div class="cetagory-title-03">
+							@if (session()->get('lang')=='bangla')
+							লাইভ টিভি
+							@else
+								Live TV
+							@endif
 						</div>
-					</div><!-- /.youtube-live-close -->
+                        <div class="photo">
+                            <div class="embed-responsive embed-responsive-16by9 embed-responsive-item" style="margin-bottom:5px;">
+                                {!! $livetv->embed_code  ?? ''!!}
+                            </div>
+                        </div>
+                    @endif
+					<!-- /.youtube-live-close -->
 
 					<!-- facebook-page-start -->
 					<div class="cetagory-title-03">ফেসবুকে আমরা</div>
@@ -502,8 +597,84 @@
 						</div>
 					</div>
 					<!-- Namaj Times -->
-					<div class="cetagory-title-03">নামাজের সময়সূচি </div>
-					Namaj Times count option here
+					<div class="cetagory-title-03">
+                        @if (session()->get('lang')=='bangla')
+                        নামাজের সময়সূচি
+                        @else
+                        Prayer schedule
+                        @endif
+                    </div>
+					<table class="table justify-content-center">
+                        <thead>
+                          <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th scope="col">নাম</th>
+                            <th scope="col">সময়</th>
+                            @else
+                            <th scope="col">Name</th>
+                            <th scope="col">Time</th>
+                            @endif
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th>ফজর</th>
+                            <td>{{ $namaz->fajr }}</td>
+                            @else
+                            <th>Fajr</th>
+                            <td>{{ $namaz->fajr }}</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th>যোহর</th>
+                            <td>{{ $namaz->johr }}</td>
+                            @else
+                            <th>Johr</th>
+                            <td>{{ $namaz->johr }}</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th>আছর</th>
+                            <td>{{ $namaz->asor	 }}</td>
+                            @else
+                            <th>Asor</th>
+                            <td>{{ $namaz->asor	 }}</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th>মাগরিব</th>
+                            <td>{{ $namaz->magrib }}</td>
+                            @else
+                            <th>Magrib</th>
+                            <td>{{ $namaz->magrib }}</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th>ইশা</th>
+                            <td>{{ $namaz->esha }}</td>
+                            @else
+                            <th>Esha</th>
+                            <td>{{ $namaz->esha }}</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if (session()->get('lang')=='bangla')
+                            <th>জুম্মা</th>
+                            <td>{{ $namaz->jummah }}</td>
+                            @else
+                            <th>Jummah</th>
+                            <td>{{ $namaz->jummah }}</td>
+                            @endif
+
+                        </tr>
+                        </tbody>
+                    </table>
 					<!-- Namaj Times -->
 					<div class="cetagory-title-03">পুরানো সংবাদ  </div>
 					<form action="" method="post">
@@ -517,32 +688,26 @@
 				   </form>
 				   <!-- news -->
 				   <br><br><br><br><br>
-				   <div class="cetagory-title-04"> গুরুত্বপূর্ণ ওয়েবসাইট </div>
+				   <div class="cetagory-title-04">
+                            @if (session()->get('lang')=='bangla')
+                            গুরুত্বপূর্ণ ওয়েবসাইট
+                            @else
+                            Important Websites
+                            @endif
+                    </div>
 				   <div class="">
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
-				   	<div class="news-title-02">
-				   		<h4 class="heading-03"><a href="#"><i class="fa fa-check" aria-hidden="true"></i> লালমনিরহাটে আওয়ামী লীগ  </a> </h4>
-				   	</div>
+                    @foreach ($websites as $website)
+                        @if (session()->get('lang')=='bangla')
+                        <div class="news-title-02">
+                            <h4 class="heading-03"><a href="{{ $website->website_link ?? ''}} "><i class="fa fa-check" aria-hidden="true"></i> {{ $website->website_name_bn ?? ''}} </a> </h4>
+                        </div>
+                        @else
+                        <div class="news-title-02">
+                            <h4 class="heading-03"><a href="{{ $website->website_link ?? ''}} "><i class="fa fa-check" aria-hidden="true"></i> {{ $website->website_name ?? ''}}   </a> </h4>
+                        </div>
+                        @endif
+				   	@endforeach
+
 				   </div>
 
 				</div>

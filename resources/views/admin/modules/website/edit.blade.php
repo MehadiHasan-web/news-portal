@@ -24,6 +24,10 @@
                     <input value="{{ $data->website_name }}" type="text" class="form-control" id="website_name" name="website_name" required>
                 </div>
                 <div class="mb-3">
+                    <label for="website_name_bn" class="form-label">Website Name Bangla</label>
+                    <input value="{{ $data->website_name_bn }}" type="text" class="form-control" id="website_name_bn" name="website_name_bn" required>
+                </div>
+                <div class="mb-3">
                     <label for="website_link" class="form-label">Website Link</label>
                     <input value="{{ $data->website_link }}" type="text" class="form-control" id="website_link" name="website_link" required>
                 </div>

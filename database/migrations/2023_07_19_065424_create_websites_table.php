@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('websites', function (Blueprint $table) {
             $table->id();
             $table->string('website_name')->nullable();
+            $table->string('website_name_bn')->nullable();
             $table->string('website_link')->nullable();
             $table->timestamps();
         });

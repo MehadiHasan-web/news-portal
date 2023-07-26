@@ -46,12 +46,17 @@
 
                 <div class="col-md-6">
                     <label for="category" class="form-label">Category</label>
-                    <select id="category" class="form-select" name="category">
+                    <select id="category" class="form-select @error('category')is-invalid @enderror" name="category">
                         <option selected disabled>Choose...</option>
                         @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->category_bn }} || {{ $category->category_en }}</option>
                         @endforeach
                     </select>
+                    @error('category')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
 
                 </div>
                 <div class="col-md-6">
@@ -64,12 +69,17 @@
 
                 <div class="col-md-6">
                     <label for="district" class="form-label">District</label>
-                    <select  id="districtname" class="form-select" name="dist_id">
+                    <select  id="districtname" class="form-select @error('dist_id')is-invalid @enderror" name="dist_id">
                         <option selected disabled>Choose...</option>
                         @foreach ($districts as $district)
                         <option value="{{ $district->id }}">{{ $district->district_bn }} || {{ $district->district_en }}</option>
                         @endforeach
                     </select>
+                    @error('dist_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="col-md-6">
                     <label for="subdistrict" class="form-label">Sub District</label>
@@ -81,8 +91,12 @@
 
                 <div class="mb-1">
                     <label for="formFileSm" class="form-label">File input</label>
-                    <input class="form-control form-control-sm " id="formFileSm" type="file" name="photo">
-
+                    <input class="form-control form-control-sm @error('photo')is-invalid @enderror" id="formFileSm" type="file" name="photo">
+                    @error('photo')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
 
                 <div class="col-md-6">

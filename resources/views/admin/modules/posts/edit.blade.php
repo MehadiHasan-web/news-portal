@@ -60,7 +60,7 @@
                 <div class="col-md-6">
                     <label for="subcategory" class="form-label">Sub Category</label>
                     <select id="subcategory" class="form-select " name="subcategory">
-                      <option selected>Choose...</option>
+                      <option selected disabled>Choose...</option>
                       @foreach ($subcategories as $data)
                         <option value="{{ $data->id }}" <?php if ($data->id == $post->subcat_id ) {
                             echo 'selected';
@@ -73,7 +73,7 @@
                 <div class="col-md-6">
                     <label for="district" class="form-label">District</label>
                     <select  id="districtname" class="form-select" name="dist_id">
-                        <option selected disabled>Choose...</option>
+                        <option selected disabled >Choose...</option>
                         @foreach ($districts as $district)
                         <option value="{{ $district->id }}" <?php if ($district->id == $post->dist_id) {
                             echo 'selected';
@@ -84,7 +84,7 @@
                 <div class="col-md-6">
                     <label for="subdistrict" class="form-label">Sub District</label>
                     <select id="subdistrictsid" class="form-select" name="subdistrict">
-                      <option selected>Choose...</option>
+                      <option selected disabled>Choose...</option>
                       @foreach ($subdistrict as $data)
                         <option value="{{ $data->id }}" <?php if ($data->id == $post->subdist_id ) {
                             echo 'selected';

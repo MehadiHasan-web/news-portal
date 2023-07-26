@@ -61,7 +61,7 @@
                             @if (session()->get('lang') === 'bangla')
                             <li class="version"><a href="{{ route('language.english') }}">English</a></li>
                             @else
-                            <li class="version"><a href="{{ route('language.bangla') }}">Bangla</a></li>
+                            <li class="version"><a href="{{ route('language.bangla') }}">বাংলা</a></li>
                             @endif
 
 
@@ -101,10 +101,11 @@
 								<div class="dropdown">
 								  <button class="dropbtn-02"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
 								  <div class="dropdown-content">
-									<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
-									<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
-									<a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i> Youtube</a>
-									<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+									<a href="{{ $social->facebook ?? '' ?? '' }}"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
+									<a href="{{ $social->twitter ?? '' }}"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
+									<a href="{{ $social->youtube ?? '' }}"><i class="fa fa-youtube-play" aria-hidden="true"></i> Youtube</a>
+									<a href="{{ $social->instagram ?? '' }}"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+									<a href="{{ $social->linkedin ?? '' }}"><i class="fa fa-linkedin" aria-hidden="true"></i> linkedin</a>
 								  </div>
 								</div>
 							</li>

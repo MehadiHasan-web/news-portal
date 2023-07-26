@@ -29,6 +29,7 @@
             <thead>
                 <tr>
                     <th>Website Name</th>
+                    <th>Website Name Bangla</th>
                     <th>Website Link</th>
                     <th>Action</th>
                 </tr>
@@ -38,6 +39,7 @@
                 @foreach($websites as $website)
                 <tr>
                     <td>{{ $website->website_name }}</td>
+                    <td>{{ $website->website_name_bn }}</td>
                     <td>{{ $website->website_link }}</td>
                     <td >
                         <a href="{{ route('importantWebsite.edit', $website->id) }}" class="btn btn-info btn-sm "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -80,6 +82,15 @@
                   <label for="name" class="form-label">Website Name</label>
                   <input type="text" class="form-control @error('website_name')is-invalid @enderror" id="cat_en" name="website_name" >
                     @error('website_name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                  <label for="website_name_bn" class="form-label">Website Name Bangla</label>
+                  <input type="text" class="form-control @error('website_name_bn')is-invalid @enderror" id="website_name_bn" name="website_name_bn" >
+                    @error('website_name_bn')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

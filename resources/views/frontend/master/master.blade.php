@@ -1,5 +1,7 @@
 @include('frontend.includes.header')
 @include('frontend.includes.nav')
+
+
     <!-- top-add-start -->
 	<section>
 		<div class="container-fluid">

@@ -37,6 +37,7 @@
                 @csrf
 
                 <div class="form-group mt-3">
+                    <label for="notice">Notice English</label>
                     <textarea class="form-control @error('notice')is-invalid @enderror" name="notice" id="notice" cols="30" rows="10">{{ $notice->notice ?? '' }}</textarea>
                     @error('notice')
                     <span class="invalid-feedback" role="alert">
@@ -44,6 +45,17 @@
                     </span>
                     @enderror
                 </div>
+
+                <div class="form-group mt-3">
+                    <label for="notice_bn">Notice Bangla</label>
+                    <textarea class="form-control @error('notice_bn')is-invalid @enderror" name="notice_bn" id="notice_bn" cols="30" rows="10">{{ $notice->notice_bn ?? '' }}</textarea>
+                    @error('notice_bn')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
                 @if (isset($id)&&$notice->status==1 )
                 <p class="text-primary">Now notice are active</p>
                 @else
