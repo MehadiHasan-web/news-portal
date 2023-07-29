@@ -25,24 +25,56 @@ class HomeController extends Controller
         // $posts = Post::all();
 
         $latestPost = Post::where('first_section_thumbnail', 1)->orderBy('created_at', 'desc')->first();
-        $first_section = Post::where('first_section', 1)->orderByDesc('created_at')->limit(8)->get();
+        $first_section = Post::where('first_section', 1)->whereNot('id', $latestPost->id)->orderByDesc('created_at')->limit(8)->get();
 
         //1st category from posts
         $firstCategory = $categories->first();
-        $filteredPostsBycat = Post::where('cat_id', $firstCategory->id)->get();
-        // ->orderBy('created_at', 'desc')
-        $big_thumcat = $filteredPostsBycat->Where('big_thumbnail', 1)->first();
-        $limitpostbycat = $filteredPostsBycat->splice(1, 3);
+
+        $big_thumcat = Post::where('cat_id', $firstCategory->id)->Where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $limitpostbycat = Post::where('cat_id', $firstCategory->id)->Where('first_section', 1)->whereNot('id', $big_thumcat->id)->orderBy('created_at', 'desc')->limit(2)->get();
 
         // 2nd category from posts
-        $secondCategory = $categories->splice(1, 1)->first();
-        $filteredPostsBy2ndCat = Post::where('cat_id', $secondCategory->id)->get();
+        $secondCategory = $categories->skip(1)->first();
+        // $postsWithSecondCategory = Post::where('cat_id', $secondCategory->id)->get();
 
-        $big_thum2ndCat = $filteredPostsBy2ndCat->Where('big_thumbnail', 1)->first();
-        $limitpostby2ndCat = $filteredPostsBy2ndCat->splice(1, 3);
+        $secondCategoryBigThumbs = Post::where('cat_id', $secondCategory->id)->Where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $secondCategoryPosts = Post::where('cat_id', $secondCategory->id)->Where('first_section', 1)->orderBy('created_at', 'desc')->WhereNot('id', $secondCategoryBigThumbs->id)->limit(2)->get();
 
-        // dd($filteredPostsBy2ndCat);
-        return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'big_thum2ndCat', 'limitpostby2ndCat'));
+        // 3nd posts from category
+        $thirdCategory = $categories->skip(2)->first();
+        $thirdCategoryPostsThumb = Post::where('cat_id', $thirdCategory->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+
+        $thirdCatPosts = Post::where('cat_id', $thirdCategory->id)->Where('first_section', 1)->WhereNot('id', $thirdCategoryPostsThumb->id)->orderBy('created_at', 'desc')->limit(3)->get();
+
+        // 4rd posts
+        $catFour = $categories->skip(3)->first();
+        $fourCatPostsThumb = Post::where('cat_id', $catFour->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $fourCatPosts = Post::where('cat_id', $catFour->id)->Where('first_section', 1)->WhereNot('id', $fourCatPostsThumb->id)->orderBy('created_at', 'desc')->limit(3)->get();
+
+        // 5rd posts
+        $catFive = $categories->skip(4)->first();
+        $fiveCatPostsThumb = Post::where('cat_id', $catFive->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $fiveCatPosts = Post::where('cat_id', $catFive->id)->Where('first_section', 1)->WhereNot('id', $fiveCatPostsThumb->id)->orderBy('created_at', 'desc')->limit(3)->get();
+
+        // 6rd posts
+        $catSix = $categories->skip(5)->first();
+        $sixCatPostsThumb = Post::where('cat_id', $catSix->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $sixCatPosts = Post::where('cat_id', $catSix->id)->Where('first_section', 1)->WhereNot('id', $fiveCatPostsThumb->id)->orderBy('created_at', 'desc')->limit(3)->get();
+
+        // 7nd category from posts
+        $sevenCat = $categories->skip(6)->first();
+        $sevenCatPostsThumb = Post::where('cat_id', $sevenCat->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $sevenCatPosts = Post::where('cat_id', $sevenCat->id)->Where('first_section', 1)->orderBy('created_at', 'desc')->WhereNot('id', $sevenCatPostsThumb->id)->limit(2)->get();
+
+        // 8nd category from posts
+        $eightCat = $categories->skip(7)->first();
+        $eightCatPostsThumb = Post::where('cat_id', $eightCat->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
+        $eightCatPosts = Post::where('cat_id', $eightCat->id)->Where('first_section', 1)->orderBy('created_at', 'desc')->WhereNot('id', $eightCatPostsThumb->id)->limit(2)->get();
+
+
+        // dd($eightCat);
+
+        return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'secondCategoryBigThumbs', 'secondCategoryPosts', 'thirdCategory', 'thirdCategoryPostsThumb', 'thirdCatPosts', 'catFour', 'fourCatPostsThumb', 'fourCatPosts', 'catFive', 'fiveCatPostsThumb', 'fiveCatPosts', 'catSix', 'sixCatPostsThumb', 'sixCatPosts', 'sevenCat', 'sevenCatPostsThumb', 'sevenCatPosts', 'eightCat', 'eightCatPostsThumb', 'eightCatPosts'));
     }
     public function English()
     {

@@ -16,7 +16,7 @@
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none">Dashboard</a></li>
             <li class="breadcrumb-item active">Tables</li>
         </ol>
-        
+
         <a  href="{{ route('post.create') }}">
             <button  type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New</button>
         </a>
@@ -29,6 +29,10 @@
     </div>
     <div class="card-body">
         <table id="datatablesSimple">
+
+            
+
+
             <thead>
                 <tr>
                     <th>Title</th>

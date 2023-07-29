@@ -166,7 +166,7 @@
                     </label>
                   </div>
                   <div class="form-check form-switch">
-                    <input class="form-check-input " type="checkbox" id="General" name="bigthumbnail" value="1" style="cursor: pointer;" <?php if ($post->first_section_thumbnail == 1) {
+                    <input class="form-check-input " type="checkbox" id="General" name="bigthumbnail" value="1" style="cursor: pointer;" <?php if ($post->big_thumbnail == 1) {
                         echo 'checked';
                     } ?>>
                     <label class="form-check-label" for="General">
@@ -174,7 +174,7 @@
                     </label>
                   </div>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="firstbigthumbnail" name="first_section_thumb" value="1" style="cursor: pointer;" <?php if ($post->big_thumbnail == 1) {
+                    <input class="form-check-input" type="checkbox" id="firstbigthumbnail" name="first_section_thumb" value="1" style="cursor: pointer;" <?php if ($post->first_section_thumbnail == 1) {
                         echo 'checked';
                     } ?>>
                     <label class="form-check-label" for="firstbigthumbnail">
