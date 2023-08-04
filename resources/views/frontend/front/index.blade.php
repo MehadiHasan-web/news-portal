@@ -654,86 +654,45 @@ use Illuminate\Support\Str;
 					<div class="tab-header">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs nav-justified" role="tablist">
-							<li role="presentation" class="active"><a href="#tab21" aria-controls="tab21" role="tab" data-toggle="tab" aria-expanded="false">সর্বশেষ</a></li>
-							<li role="presentation" ><a href="#tab22" aria-controls="tab22" role="tab" data-toggle="tab" aria-expanded="true">জনপ্রিয়</a></li>
-							<li role="presentation" ><a href="#tab23" aria-controls="tab23" role="tab" data-toggle="tab" aria-expanded="true">জনপ্রিয়1</a></li>
+							<li role="presentation" class="active"><a href="#tab21" aria-controls="tab21" role="tab" data-toggle="tab" aria-expanded="false">{{ session()->get('lang') == 'bangla'?'সর্বশেষ':'Latest' }}</a></li>
+							<li role="presentation" ><a href="#tab22" aria-controls="tab22" role="tab" data-toggle="tab" aria-expanded="true">{{ session()->get('lang') == 'bangla'?'জনপ্রিয়':'Popular' }}</a></li>
+							<li role="presentation" ><a href="#tab23" aria-controls="tab23" role="tab" data-toggle="tab" aria-expanded="true">{{ session()->get('lang') == 'bangla'?'পঠিত':'High Reed' }}</a></li>
 						</ul>
 
 						<!-- Tab panes -->
 						<div class="tab-content ">
 							<div role="tabpanel" class="tab-pane in active" id="tab21">
 								<div class="news-titletab">
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
+                                    @if (isset($latest))
+                                       @foreach ($latest as $item)
+                                       <div class="news-title-02">
+										<h4 class="heading-03"><a href="#">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
+									    </div>
+                                       @endforeach
+                                    @endif
+
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="tab22">
 								<div class="news-titletab">
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
+                                    @if (isset($popular))
+                                       @foreach ($popular as $item)
+                                       <div class="news-title-02">
+										<h4 class="heading-03"><a href="#">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
+									    </div>
+                                       @endforeach
+                                    @endif
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="tab23">
 								<div class="news-titletab">
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
-									<div class="news-title-02">
-										<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-									</div>
+                                    @if (isset($highReed))
+                                       @foreach ($highReed as $item)
+                                       <div class="news-title-02">
+										<h4 class="heading-03"><a href="#">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
+									    </div>
+                                       @endforeach
+                                    @endif
 								</div>
 							</div>
 						</div>
@@ -838,6 +797,7 @@ use Illuminate\Support\Str;
                             @endif
                     </div>
 				   <div class="">
+                    @if (isset($websites))
                     @foreach ($websites as $website)
                         @if (session()->get('lang')=='bangla')
                         <div class="news-title-02">
@@ -849,6 +809,7 @@ use Illuminate\Support\Str;
                         </div>
                         @endif
 				   	@endforeach
+                    @endif
 
 				   </div>
 
@@ -865,54 +826,30 @@ use Illuminate\Support\Str;
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-8 col-sm-7">
-					<div class="gallery_cetagory-title"> Photo Gallery </div>
+					<div class="gallery_cetagory-title">  {{ session()->get('lang')=='bangla'? 'ফটো গ্যালারি':'Photo Gallery' }}</div>
 
 					<div class="row">
 	                    <div class="col-md-8 col-sm-8">
 	                        <div class="photo_screen">
 	                            <div class="myPhotos" style="width:100%">
-                                      <img src="{{ asset('frontend/assets/img/news.jpg') }}"  alt="Avatar">
+                                      @if (isset($thumbPhoto))
+                                      <img src="{{ asset($thumbPhoto->photo) }}"  alt="{{ $thumbPhoto->title }}">
+                                      @endif
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-md-4 col-sm-4">
 	                        <div class="photo_list_bg">
-
+                                @if (isset($thumbPhotoList))
+                                @foreach ($thumbPhotoList as $item)
 	                            <div class="photo_img photo_border active">
-	                                <img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="image" onclick="currentDiv(1)">
+	                                <img src="{{ asset($item->photo) }}" alt="" onclick="currentDiv(1)">
 	                                <div class="heading-03">
-	                                    ভারতে সিনেমা হলে জাতীয় সঙ্গীত বাজানো আর বাধ্যতামূলক নয়।
+	                                    {{ $item->title }}
 	                                </div>
 	                            </div>
-
-	                            <div class="photo_img photo_border">
-	                                <img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="image" onclick="currentDiv(1)">
-	                                <div class="heading-03">
-	                                    ভারতে সিনেমা হলে জাতীয় সঙ্গীত বাজানো আর বাধ্যতামূলক নয়।
-	                                </div>
-	                            </div>
-
-	                            <div class="photo_img photo_border">
-	                                <img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="image" onclick="currentDiv(1)">
-	                                <div class="heading-03">
-	                                    ভারতে সিনেমা হলে জাতীয় সঙ্গীত বাজানো আর বাধ্যতামূলক নয়।
-	                                </div>
-	                            </div>
-
-	                            <div class="photo_img photo_border">
-	                                <img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="image" onclick="currentDiv(1)">
-	                                <div class="heading-03">
-	                                    ভারতে সিনেমা হলে জাতীয় সঙ্গীত বাজানো আর বাধ্যতামূলক নয়।
-	                                </div>
-	                            </div>
-
-	                            <div class="photo_img photo_border">
-	                                <img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="image" onclick="currentDiv(1)">
-	                                <div class="heading-03">
-	                                    ভারতে সিনেমা হলে জাতীয় সঙ্গীত বাজানো আর বাধ্যতামূলক নয়।
-	                                </div>
-	                            </div>
-
+                                @endforeach
+                                @endif
 	                        </div>
 	                    </div>
 	                </div>
@@ -956,14 +893,16 @@ use Illuminate\Support\Str;
 
 				</div>
 				<div class="col-md-4 col-sm-5">
-					<div class="gallery_cetagory-title"> photo Gallery </div>
+					<div class="gallery_cetagory-title">{{ session()->get('lang') == 'bangla' ? 'ভিডিও গ্যালারি':'Video Gallery' }}</div>
 
 					<div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="video_screen">
                                 <div class="myVideos" style="width:100%">
                                     <div class="embed-responsive embed-responsive-16by9 embed-responsive-item">
-                                    <iframe width="853" height="480" src="https://www.youtube.com/embed/AWM8164ksVY?list=RDAWM8164ksVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    @if (isset($videoThumbGallery))
+                                    {!! $videoThumbGallery->embed_code !!}
+                                    @endif
                                 </div>
                                 </div>
                             </div>
@@ -974,42 +913,20 @@ use Illuminate\Support\Str;
                         <div class="col-md-12">
 
                             <div class="gallery_sec owl-carousel">
-
+                                @if (isset($videoList))
+                                @foreach ($videoList as $item)
                                 <div class="video_image" style="width:100%" onclick="currentDivs(1)">
-                                    <img src="{{ asset('frontend/assets/img/news.jpg') }}"  alt="Avatar">
+                                    <div class="video-gallery">
+                                        {!! $item->embed_code !!}
+                                    </div>
                                     <div class="heading-03">
                                         <div class="content_padding">
-                                            রোহিঙ্গা সংকট আবাদে লাভবান কৃষকেরা
+                                            {{ $item->title }}
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="video_image" style="width:100%" onclick="currentDivs(1)">
-                                    <img src="{{ asset('frontend/assets/img/news.jpg') }}"  alt="Avatar">
-                                    <div class="heading-03">
-                                        <div class="content_padding">
-                                            রোহিঙ্গা সংকট আবাদে লাভবান কৃষকেরা
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="video_image" style="width:100%" onclick="currentDivs(1)">
-                                    <img src="{{ asset('frontend/assets/img/news.jpg') }}"  alt="Avatar">
-                                    <div class="heading-03">
-                                        <div class="content_padding">
-                                            রোহিঙ্গা সংকট আবাদে লাভবান কৃষকেরা
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="video_image" style="width:100%" onclick="currentDivs(1)">
-                                    <img src="{{ asset('frontend/assets/img/news.jpg') }}"  alt="Avatar">
-                                    <div class="heading-03">
-                                        <div class="content_padding">
-                                            রোহিঙ্গা সংকট আবাদে লাভবান কৃষকেরা
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
+                                @endif
 
                             </div>
                         </div>

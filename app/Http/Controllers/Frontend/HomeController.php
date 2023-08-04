@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Category;
+use App\Models\Admin\Photo;
 use App\Models\Admin\Post;
+use App\Models\Admin\Video;
 use App\Models\Admin\Website;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -76,11 +78,22 @@ class HomeController extends Controller
         $getDesPost = Post::whereNotNull('dist_id')->orderBy('created_at', 'desc')->skip(1)->limit(3)->get();
         $getDesPostThree = Post::whereNotNull('dist_id')->orderBy('created_at', 'desc')->skip(4)->limit(3)->get();
 
+        //photo gallery
+        $thumbPhoto = Photo::where('type', 1)->orderBy('created_at', 'desc')->first();
+        $thumbPhotoList = Photo::whereNot('id', $thumbPhoto->id)->where('type', 0)->orderBy('created_at', 'desc')->limit(10)->get();
 
+        //video gallery
+        $videoThumbGallery = Video::where('type', 1)->orderBy('created_at', 'desc')->first();
+        $videoList = Video::where('type', 0)->orderBy('created_at', 'desc')->limit(10)->get();
 
-        // dd($getDesPostthree);
+        // the latest news
+        $latest = Post::orderBy('id', 'desc')->limit(8)->get();
+        $popular = Post::orderBy('id', 'desc')->inRandomOrder()->limit(8)->get();
+        $highReed = Post::orderBy('id', 'ASC')->inRandomOrder()->limit(8)->get();
 
-        return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'secondCategoryBigThumbs', 'secondCategoryPosts', 'thirdCategory', 'thirdCategoryPostsThumb', 'thirdCatPosts', 'catFour', 'fourCatPostsThumb', 'fourCatPosts', 'catFive', 'fiveCatPostsThumb', 'fiveCatPosts', 'catSix', 'sixCatPostsThumb', 'sixCatPosts', 'sevenCat', 'sevenCatPostsThumb', 'sevenCatPosts', 'eightCat', 'eightCatPostsThumb', 'eightCatPosts', 'countryPostThumb', 'getDesPost', 'getDesPostThree'));
+        // dd($highReed);
+
+        return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'secondCategoryBigThumbs', 'secondCategoryPosts', 'thirdCategory', 'thirdCategoryPostsThumb', 'thirdCatPosts', 'catFour', 'fourCatPostsThumb', 'fourCatPosts', 'catFive', 'fiveCatPostsThumb', 'fiveCatPosts', 'catSix', 'sixCatPostsThumb', 'sixCatPosts', 'sevenCat', 'sevenCatPostsThumb', 'sevenCatPosts', 'eightCat', 'eightCatPostsThumb', 'eightCatPosts', 'countryPostThumb', 'getDesPost', 'getDesPostThree', 'thumbPhoto', 'thumbPhotoList', 'videoThumbGallery', 'videoList', 'latest', 'popular', 'highReed'));
     }
     public function English()
     {
