@@ -493,42 +493,48 @@ use Illuminate\Support\Str;
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-9 col-sm-9">
-					<div class="cetagory-title-02"><a href="#">সারাদেশে  <i class="fa fa-angle-right" aria-hidden="true"></i> all district news tab here <span><i class="fa fa-plus" aria-hidden="true"></i> সব খবর  </span></a></div>
+					<div class="cetagory-title-02"><a href="#">
+                        @if (session()->get('lang')=='bangla')
+                        সারাদেশে
+                        @else
+                        Country
+                        @endif
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        @if (session()->get('lang')=='bangla')
+                        সব জেলার খবর
+                        @else
+                        All district news
+                        @endif<span><i class="fa fa-plus" aria-hidden="true"></i>
+                        @if (session()->get('lang')=='bangla')
+                        সব খবর
+                        @else
+                        All News
+                        @endif  </span></a></div>
 
 					<div class="row">
 						<div class="col-md-4 col-sm-4">
 							<div class="top-news">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+								<a href="#"><img src="{{ asset($countryPostThumb->image) }}" alt="Notebook"></a>
+								<h4 class="heading-02"><a href="#">{{ session()->get('lang') == 'bangle' ? $countryPostThumb->title_bn : $countryPostThumb->title_en }}</a> </h4>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4">
-							<div class="image-title">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-							</div>
-							<div class="image-title">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-							</div>
-							<div class="image-title">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-							</div>
+                            @foreach ($getDesPost as $item)
+                                <div class="image-title">
+                                    <a href="#"><img src="{{ URL::to($item->image) }}" alt="Notebook"></a>
+                                    <h4 class="heading-03"><a href="#">{{ session()->get('lang') == 'bangla' ? $item->title_bn:$item->title_en }}</a> </h4>
+                                </div>
+                            @endforeach
+
+
 						</div>
 						<div class="col-md-4 col-sm-4">
-							<div class="image-title">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-							</div>
-							<div class="image-title">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-							</div>
-							<div class="image-title">
-								<a href="#"><img src="{{ asset('frontend/assets/img/news.jpg') }}" alt="Notebook"></a>
-								<h4 class="heading-03"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-							</div>
+							@foreach ($getDesPostThree as $item)
+                                <div class="image-title">
+                                    <a href="#"><img src="{{ URL::to($item->image) }}" alt="Notebook"></a>
+                                    <h4 class="heading-03"><a href="#">{{ session()->get('lang') == 'bangla' ? $item->title_bn:$item->title_en }}</a> </h4>
+                                </div>
+                            @endforeach
 						</div>
 					</div>
 					<!-- ******* -->

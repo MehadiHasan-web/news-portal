@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubDistrictController;
@@ -55,7 +56,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     //photo gallery
     Route::resource('photo', PhotoController::class);
     Route::resource('video', VideoController::class);
+
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 });
+
 
 
 Route::post('/logout', function () {

@@ -71,10 +71,16 @@ class HomeController extends Controller
         $eightCatPostsThumb = Post::where('cat_id', $eightCat->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
         $eightCatPosts = Post::where('cat_id', $eightCat->id)->Where('first_section', 1)->orderBy('created_at', 'desc')->WhereNot('id', $eightCatPostsThumb->id)->limit(2)->get();
 
+        //all country
+        $countryPostThumb = Post::whereNotNull('dist_id')->orderBy('created_at', 'desc')->first();
+        $getDesPost = Post::whereNotNull('dist_id')->orderBy('created_at', 'desc')->skip(1)->limit(3)->get();
+        $getDesPostThree = Post::whereNotNull('dist_id')->orderBy('created_at', 'desc')->skip(4)->limit(3)->get();
 
-        // dd($eightCat);
 
-        return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'secondCategoryBigThumbs', 'secondCategoryPosts', 'thirdCategory', 'thirdCategoryPostsThumb', 'thirdCatPosts', 'catFour', 'fourCatPostsThumb', 'fourCatPosts', 'catFive', 'fiveCatPostsThumb', 'fiveCatPosts', 'catSix', 'sixCatPostsThumb', 'sixCatPosts', 'sevenCat', 'sevenCatPostsThumb', 'sevenCatPosts', 'eightCat', 'eightCatPostsThumb', 'eightCatPosts'));
+
+        // dd($getDesPostthree);
+
+        return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'secondCategoryBigThumbs', 'secondCategoryPosts', 'thirdCategory', 'thirdCategoryPostsThumb', 'thirdCatPosts', 'catFour', 'fourCatPostsThumb', 'fourCatPosts', 'catFive', 'fiveCatPostsThumb', 'fiveCatPosts', 'catSix', 'sixCatPostsThumb', 'sixCatPosts', 'sevenCat', 'sevenCatPostsThumb', 'sevenCatPosts', 'eightCat', 'eightCatPostsThumb', 'eightCatPosts', 'countryPostThumb', 'getDesPost', 'getDesPostThree'));
     }
     public function English()
     {

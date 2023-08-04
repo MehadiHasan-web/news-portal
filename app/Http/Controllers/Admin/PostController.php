@@ -39,10 +39,14 @@ class PostController extends Controller
             ->leftJoin('categories', 'posts.cat_id', '=', 'categories.id')
             ->leftJoin('sub_categories', 'posts.subcat_id', '=', 'sub_categories.id')
             ->select('posts.*', 'categories.category_bn', 'sub_categories.sub_category_bn')
-            ->get();
-
-
-        return view('admin.modules.posts.index', compact('post'));
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+        // ->get();
+        $categories = Category::orderBy('created_at', 'desc')->get();
+        $district = District::orderBy('created_at', 'desc')->get();
+        // dd($district);
+        // return response()->json($post);
+        return view('admin.modules.posts.index', compact('post', 'categories', 'district'));
     }
 
     /**
@@ -67,7 +71,7 @@ class PostController extends Controller
             'title_en' => 'required|string|max:255',
             'category' => 'required|integer',
             'subcategory' => 'nullable|integer',
-            'dist_id' => 'required|integer',
+            'dist_id' => 'nullable|integer',
             'subdistrict' => 'nullable',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tags_bn' => 'nullable|string|max:255',
@@ -158,7 +162,7 @@ class PostController extends Controller
             'title_en' => 'required|string|max:255',
             'category' => 'required|integer',
             'subcategory' => 'nullable|integer',
-            'dist_id' => 'required|integer',
+            'dist_id' => 'nullable|integer',
             'subdistrict' => 'nullable',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tags_bn' => 'nullable|string|max:255',
