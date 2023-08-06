@@ -104,9 +104,20 @@ use Illuminate\Support\Str;
 						<div class="col-md-1 col-sm-1 col-lg-1"></div>
 						<div class="col-md-10 col-sm-10">
 							<div class="lead-news">
-								<div class="service-img"><a href="#"><img src="{{ URL::to($latestPost->image) }}" alt="{{ $latestPost->title_bn }}"></a></div>
+                                @php
+                                if (isset($latestPost) && session()->get('lang') == 'bangla') {
+                                    $latestPostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $latestPost->title_bn)));
+                                    // dd($latestPostSlug);
+                                } else {
+                                    $latestPostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $latestPost->title_en)));
+                                    // dd($latestPostSlug);
+                                }
+                                @endphp
+
+
+								<div class="service-img"><a href="{{ route('single.post', ['id' => $latestPost->id, 'slug' => $latestPostSlug]) }}"><img src="{{ URL::to($latestPost->image) }}" alt="{{ $latestPost->title_en }}"></a></div>
 								<div class="content">
-								<h4 class="lead-heading-01"><a href="#">
+								<h4 class="lead-heading-01"><a href="{{ route('single.post', ['id' => $latestPost->id, 'slug' => $latestPostSlug]) }}">
                                     @if (session()->get('lang')=='bangla')
                                     {{ $latestPost->title_bn }}
                                     @else
@@ -118,13 +129,21 @@ use Illuminate\Support\Str;
 						</div>
 					</div>
 						<div class="row">
-
-
+                            @if (isset($first_section))
                             @foreach($first_section as $post)
+                            @php
+                                if (session()->get('lang') == 'bangla') {
+                                    $first_sectionSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $post->title_bn)));
+                                    // dd($first_sectionSlug);
+                                } else {
+                                    $first_sectionSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $post->title_en)));
+                                    // dd($first_sectionSlug);
+                                }
+                            @endphp
                             <div class="col-md-3 col-sm-3">
                                 <div class="top-news">
-                                    <a href="#"><img src="{{ URL::to($post->image) }}" alt="{{ $post->title_en }}"></a>
-                                    <h4 class="heading-02" style="height: 70px;"><a href="#">
+                                    <a href="{{ route('single.post', ['id' => $post->id, 'slug' => $first_sectionSlug]) }}"><img src="{{ URL::to($post->image) }}" alt="{{ $post->title_en }}"></a>
+                                    <h4 class="heading-02" style="height: 70px;"><a href="{{ route('single.post', ['id' => $post->id, 'slug' => $first_sectionSlug]) }}">
                                         @if (session()->get('lang')=='bangla')
                                         {{   substr($post->title_bn, 0, 60).'..' }}
                                         @else
@@ -134,6 +153,7 @@ use Illuminate\Support\Str;
                                 </div>
                             </div>
                             @endforeach
+                            @endif
 
 
 						</div>

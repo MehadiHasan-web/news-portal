@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Frontend\HomeController;
-
-
-
-
-
+use App\Http\Controllers\Frontend\SinglePostController;
 
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', function () {
@@ -75,4 +71,6 @@ Route::group([], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/language/english', [HomeController::class, "English"])->name('language.english');
     Route::get('/language/bangla', [HomeController::class, "Bangla"])->name('language.bangla');
+    // single post
+    Route::get('/post/{id}/{slug}', [SinglePostController::class, 'SinglePost'])->name('single.post');
 });
