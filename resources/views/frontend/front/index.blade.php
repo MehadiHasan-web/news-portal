@@ -145,7 +145,7 @@ use Illuminate\Support\Str;
                                     <a href="{{ route('single.post', ['id' => $post->id, 'slug' => $first_sectionSlug]) }}"><img src="{{ URL::to($post->image) }}" alt="{{ $post->title_en }}"></a>
                                     <h4 class="heading-02" style="height: 70px;"><a href="{{ route('single.post', ['id' => $post->id, 'slug' => $first_sectionSlug]) }}">
                                         @if (session()->get('lang')=='bangla')
-                                        {{   substr($post->title_bn, 0, 60).'..' }}
+                                        {!! Str::words($post->title_bn, 10, '...') !!}
                                         @else
                                         {!! Str::words($post->title_en, 10, '...') !!}
                                         @endif
@@ -186,9 +186,18 @@ use Illuminate\Support\Str;
 								<div class="row">
 									<div class="col-md-6 col-sm-6">
 										@if (isset($big_thumcat) && $big_thumcat->big_thumbnail==1)
+                                        @php
+                                        if (session()->get('lang') == 'bangla') {
+                                            $big_thumcatSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $big_thumcat->title_bn)));
+                                            // dd($first_sectionSlug);
+                                        } else {
+                                            $big_thumcatSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $big_thumcat->title_en)));
+                                            // dd($first_sectionSlug);
+                                        }
+                                        @endphp
                                         <div class="top-news">
-											<a href="#"><img src="{{ asset($big_thumcat->image) }}" alt="Notebook"></a>
-											<h4 class="heading-02"><a href="#">
+											<a href="{{ route('single.post', ['id' => $big_thumcat->id, 'slug' => $big_thumcatSlug]) }}"><img src="{{ asset($big_thumcat->image) }}" alt="Notebook"></a>
+											<h4 class="heading-02"><a href="{{ route('single.post', ['id' => $big_thumcat->id, 'slug' => $big_thumcatSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $big_thumcat->title_bn }}
                                                 @else
@@ -200,9 +209,18 @@ use Illuminate\Support\Str;
 									</div>
 									<div class="col-md-6 col-sm-6">
                                         @foreach ($limitpostbycat as $item)
+                                        @php
+                                        if (session()->get('lang') == 'bangla') {
+                                            $limitpostbycatSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                            // dd($first_sectionSlug);
+                                        } else {
+                                            $limitpostbycatSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                            // dd($first_sectionSlug);
+                                        }
+                                        @endphp
                                         <div class="image-title">
-											<a href="#"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
-											<h4 class="heading-03"><a href="#">
+											<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $limitpostbycatSlug]) }}"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
+											<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $limitpostbycatSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $item->title_bn }}
                                                 @else
@@ -236,8 +254,17 @@ use Illuminate\Support\Str;
 									<div class="col-md-6 col-sm-6">
 										@if (isset($secondCategoryBigThumbs) && $secondCategoryBigThumbs->big_thumbnail==1)
                                         <div class="top-news">
-											<a href="#"><img src="{{ asset($secondCategoryBigThumbs->image) }}" alt="Notebook"></a>
-											<h4 class="heading-02"><a href="#">
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $secondCategoryBigThumbsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $secondCategoryBigThumbs->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $secondCategoryBigThumbsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $secondCategoryBigThumbs->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
+											<a href="{{ route('single.post', ['id' => $secondCategoryBigThumbs->id, 'slug' => $secondCategoryBigThumbsSlug]) }}"><img src="{{ asset($secondCategoryBigThumbs->image) }}" alt="Notebook"></a>
+											<h4 class="heading-02"><a href="{{ route('single.post', ['id' => $secondCategoryBigThumbs->id, 'slug' => $secondCategoryBigThumbsSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $secondCategoryBigThumbs->title_bn }}
                                                 @else
@@ -249,9 +276,18 @@ use Illuminate\Support\Str;
 									</div>
 									<div class="col-md-6 col-sm-6">
                                         @foreach ($secondCategoryPosts as $item)
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $secondCategoryPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $secondCategoryPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
                                         <div class="image-title">
-											<a href="#"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
-											<h4 class="heading-03"><a href="#">
+											<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $secondCategoryPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
+											<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $secondCategoryPostsSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $item->title_bn }}
                                                 @else
@@ -331,19 +367,37 @@ use Illuminate\Support\Str;
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<div class="top-news">
-									<a href="#"><img src="{{ asset($thirdCategoryPostsThumb->image) }}" alt="Notebook"></a>
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $thirdCategoryPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $thirdCategoryPostsThumb->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $thirdCategoryPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $thirdCategoryPostsThumb->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
+									<a href="{{ route('single.post', ['id' => $thirdCategoryPostsThumb->id, 'slug' => $thirdCategoryPostsThumbSlug]) }}"><img src="{{ asset($thirdCategoryPostsThumb->image) }}" alt="Notebook"></a>
 									@if (session()->get('lang')=='bangla')
-                                    <h4 class="heading-02"><a href="#">{{ $thirdCategoryPostsThumb->title_bn }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $thirdCategoryPostsThumb->id, 'slug' => $thirdCategoryPostsThumbSlug]) }}">{{ $thirdCategoryPostsThumb->title_bn }}</a> </h4>
                                     @else
-                                    <h4 class="heading-02"><a href="#">{{ $thirdCategoryPostsThumb->title_en }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $thirdCategoryPostsThumb->id, 'slug' => $thirdCategoryPostsThumbSlug]) }}">{{ $thirdCategoryPostsThumb->title_en }}</a> </h4>
                                     @endif
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
                                 @foreach ($thirdCatPosts as $item)
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $thirdCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $thirdCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
                                 <div class="image-title">
-									<a href="#"><img src="{{ asset($item->image) }}" alt=""></a>
-									<h4 class="heading-03"><a href="#">
+									<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $thirdCatPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt=""></a>
+									<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $thirdCatPostsSlug]) }}">
                                     @if (session()->get('lang')=='bangla')
                                         {{ $item->title_bn }}
                                     @else
@@ -376,20 +430,38 @@ use Illuminate\Support\Str;
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<div class="top-news">
-									<a href="#"><img src="{{ asset($fourCatPostsThumb->image) }}" alt="Notebook"></a>
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $fourCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $fourCatPostsThumb->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $fourCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $fourCatPostsThumb->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
+									<a href="{{ route('single.post', ['id' => $fourCatPostsThumb->id, 'slug' => $fourCatPostsThumbSlug]) }}"><img src="{{ asset($fourCatPostsThumb->image) }}" alt="Notebook"></a>
 									@if (session()->get('lang')=='bangla')
-                                    <h4 class="heading-02"><a href="#">{{ $fourCatPostsThumb->title_bn }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $fourCatPostsThumb->id, 'slug' => $fourCatPostsThumbSlug]) }}">{{ $fourCatPostsThumb->title_bn }}</a> </h4>
                                     @else
-                                    <h4 class="heading-02"><a href="#">{{ $fourCatPostsThumb->title_en }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $fourCatPostsThumb->id, 'slug' => $fourCatPostsThumbSlug]) }}">{{ $fourCatPostsThumb->title_en }}</a> </h4>
                                     @endif
 								</div>
 							</div>
 
 							<div class="col-md-6 col-sm-6">
 								@foreach ($fourCatPosts as $item)
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $fourCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $fourCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
                                 <div class="image-title">
-									<a href="#"><img src="{{ asset($item->image) }}" alt=""></a>
-									<h4 class="heading-03"><a href="#">
+									<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $fourCatPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt=""></a>
+									<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $fourCatPostsSlug]) }}">
                                     @if (session()->get('lang')=='bangla')
                                         {{ $item->title_bn }}
                                     @else
@@ -422,19 +494,37 @@ use Illuminate\Support\Str;
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<div class="top-news">
-									<a href="#"><img src="{{ asset($fiveCatPostsThumb->image) }}" alt="Notebook"></a>
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $fiveCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $fiveCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
+									<a href="{{ route('single.post', ['id' => $fiveCatPostsThumb->id, 'slug' => $fiveCatPostsThumbSlug]) }}"><img src="{{ asset($fiveCatPostsThumb->image) }}" alt="Notebook"></a>
 									@if (session()->get('lang')=='bangla')
-                                    <h4 class="heading-02"><a href="#">{{ $fiveCatPostsThumb->title_bn }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $fiveCatPostsThumb->id, 'slug' => $fiveCatPostsThumbSlug]) }}">{{ $fiveCatPostsThumb->title_bn }}</a> </h4>
                                     @else
-                                    <h4 class="heading-02"><a href="#">{{ $fiveCatPostsThumb->title_en }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $fiveCatPostsThumb->id, 'slug' => $fiveCatPostsThumbSlug]) }}">{{ $fiveCatPostsThumb->title_en }}</a> </h4>
                                     @endif
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6">
                                 @foreach ($fiveCatPosts as $item)
+                                @php
+                                if (session()->get('lang') == 'bangla') {
+                                    $fiveCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                    // dd($first_sectionSlug);
+                                } else {
+                                    $fiveCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                    // dd($first_sectionSlug);
+                                }
+                                @endphp
                                 <div class="image-title">
-									<a href="#"><img src="{{ asset($item->image) }}" alt=""></a>
-									<h4 class="heading-03"><a href="#">
+									<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $fiveCatPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt=""></a>
+									<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $fiveCatPostsSlug]) }}">
                                     @if (session()->get('lang')=='bangla')
                                         {{ $item->title_bn }}
                                     @else
@@ -467,20 +557,38 @@ use Illuminate\Support\Str;
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<div class="top-news">
-									<a href="#"><img src="{{ asset($sixCatPostsThumb->image) }}" alt="Notebook"></a>
+                                    @php
+                                    if (session()->get('lang') == 'bangla') {
+                                        $sixCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $sixCatPostsThumb->title_bn)));
+                                        // dd($first_sectionSlug);
+                                    } else {
+                                        $sixCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $sixCatPostsThumb->title_en)));
+                                        // dd($first_sectionSlug);
+                                    }
+                                    @endphp
+									<a href="{{ route('single.post', ['id' => $sixCatPostsThumb->id, 'slug' => $sixCatPostsThumbSlug]) }}"><img src="{{ asset($sixCatPostsThumb->image) }}" alt="Notebook"></a>
 									@if (session()->get('lang')=='bangla')
-                                    <h4 class="heading-02"><a href="#">{{ $sixCatPostsThumb->title_bn }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $sixCatPostsThumb->id, 'slug' => $sixCatPostsThumbSlug]) }}">{{ $sixCatPostsThumb->title_bn }}</a> </h4>
                                     @else
-                                    <h4 class="heading-02"><a href="#">{{ $sixCatPostsThumb->title_en }}</a> </h4>
+                                    <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $sixCatPostsThumb->id, 'slug' => $sixCatPostsThumbSlug]) }}">{{ $sixCatPostsThumb->title_en }}</a> </h4>
                                     @endif
 								</div>
 							</div>
 
 							<div class="col-md-6 col-sm-6">
 								@foreach ($sixCatPosts as $item)
+                                    @php
+                                    if (session()->get('lang') == 'bangla') {
+                                        $sixCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                        // dd($first_sectionSlug);
+                                    } else {
+                                        $sixCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                        // dd($first_sectionSlug);
+                                    }
+                                    @endphp
                                 <div class="image-title">
-									<a href="#"><img src="{{ asset($item->image) }}" alt=""></a>
-									<h4 class="heading-03"><a href="#">
+									<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $sixCatPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt=""></a>
+									<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $sixCatPostsSlug]) }}">
                                     @if (session()->get('lang')=='bangla')
                                         {{ $item->title_bn }}
                                     @else
@@ -534,15 +642,33 @@ use Illuminate\Support\Str;
 					<div class="row">
 						<div class="col-md-4 col-sm-4">
 							<div class="top-news">
-								<a href="#"><img src="{{ asset($countryPostThumb->image) }}" alt="Notebook"></a>
-								<h4 class="heading-02"><a href="#">{{ session()->get('lang') == 'bangle' ? $countryPostThumb->title_bn : $countryPostThumb->title_en }}</a> </h4>
+                                    @php
+                                    if (session()->get('lang') == 'bangla') {
+                                        $countryPostThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $countryPostThumb->title_bn)));
+                                        // dd($first_sectionSlug);
+                                    } else {
+                                        $countryPostThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $countryPostThumb->title_en)));
+                                        // dd($first_sectionSlug);
+                                    }
+                                    @endphp
+								<a href="{{ route('single.post', ['id' => $countryPostThumb->id, 'slug' => $countryPostThumbSlug]) }}"><img src="{{ asset($countryPostThumb->image) }}" alt="Notebook"></a>
+								<h4 class="heading-02"><a href="{{ route('single.post', ['id' => $countryPostThumb->id, 'slug' => $countryPostThumbSlug]) }}">{{ session()->get('lang') == 'bangle' ? $countryPostThumb->title_bn : $countryPostThumb->title_en }}</a> </h4>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4">
                             @foreach ($getDesPost as $item)
+                                    @php
+                                    if (session()->get('lang') == 'bangla') {
+                                        $getDesPostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                        // dd($first_sectionSlug);
+                                    } else {
+                                        $getDesPostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                        // dd($first_sectionSlug);
+                                    }
+                                    @endphp
                                 <div class="image-title">
-                                    <a href="#"><img src="{{ URL::to($item->image) }}" alt="Notebook"></a>
-                                    <h4 class="heading-03"><a href="#">{{ session()->get('lang') == 'bangla' ? $item->title_bn:$item->title_en }}</a> </h4>
+                                    <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $getDesPostSlug]) }}"><img src="{{ URL::to($item->image) }}" alt="Notebook"></a>
+                                    <h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $getDesPostSlug]) }}">{{ session()->get('lang') == 'bangla' ? $item->title_bn:$item->title_en }}</a> </h4>
                                 </div>
                             @endforeach
 
@@ -550,9 +676,18 @@ use Illuminate\Support\Str;
 						</div>
 						<div class="col-md-4 col-sm-4">
 							@foreach ($getDesPostThree as $item)
+                                    @php
+                                    if (session()->get('lang') == 'bangla') {
+                                        $getDesPostThreeSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                        // dd($first_sectionSlug);
+                                    } else {
+                                        $getDesPostThreeSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                        // dd($first_sectionSlug);
+                                    }
+                                    @endphp
                                 <div class="image-title">
-                                    <a href="#"><img src="{{ URL::to($item->image) }}" alt="Notebook"></a>
-                                    <h4 class="heading-03"><a href="#">{{ session()->get('lang') == 'bangla' ? $item->title_bn:$item->title_en }}</a> </h4>
+                                    <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $getDesPostThreeSlug]) }}"><img src="{{ URL::to($item->image) }}" alt="Notebook"></a>
+                                    <h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $getDesPostThreeSlug]) }}">{{ session()->get('lang') == 'bangla' ? $item->title_bn:$item->title_en }}</a> </h4>
                                 </div>
                             @endforeach
 						</div>
@@ -579,8 +714,17 @@ use Illuminate\Support\Str;
 									<div class="col-md-6 col-sm-6">
 										@if (isset($sevenCatPostsThumb) && $sevenCatPostsThumb->big_thumbnail==1)
                                         <div class="top-news">
-											<a href="#"><img src="{{ asset($sevenCatPostsThumb->image) }}" alt="Notebook"></a>
-											<h4 class="heading-02"><a href="#">
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $sevenCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $sevenCatPostsThumb->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $sevenCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $sevenCatPostsThumb->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
+											<a href="{{ route('single.post', ['id' => $sevenCatPostsThumb->id, 'slug' => $sevenCatPostsThumbSlug]) }}"><img src="{{ asset($sevenCatPostsThumb->image) }}" alt="Notebook"></a>
+											<h4 class="heading-02"><a href="{{ route('single.post', ['id' => $sevenCatPostsThumb->id, 'slug' => $sevenCatPostsThumbSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $sevenCatPostsThumb->title_bn }}
                                                 @else
@@ -592,9 +736,18 @@ use Illuminate\Support\Str;
 									</div>
 									<div class="col-md-6 col-sm-6">
                                         @foreach ($sevenCatPosts as $item)
+                                        @php
+                                        if (session()->get('lang') == 'bangla') {
+                                            $sevenCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                            // dd($first_sectionSlug);
+                                        } else {
+                                            $sevenCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                            // dd($first_sectionSlug);
+                                        }
+                                        @endphp
                                         <div class="image-title">
-											<a href="#"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
-											<h4 class="heading-03"><a href="#">
+											<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $sevenCatPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
+											<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $sevenCatPostsSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $item->title_bn }}
                                                 @else
@@ -628,8 +781,17 @@ use Illuminate\Support\Str;
 									<div class="col-md-6 col-sm-6">
 										@if (isset($eightCatPostsThumb) && $eightCatPostsThumb->big_thumbnail==1)
                                         <div class="top-news">
-											<a href="#"><img src="{{ asset($eightCatPostsThumb->image) }}" alt="Notebook"></a>
-											<h4 class="heading-02"><a href="#">
+                                            @php
+                                            if (session()->get('lang') == 'bangla') {
+                                                $eightCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $eightCatPostsThumb->title_bn)));
+                                                // dd($first_sectionSlug);
+                                            } else {
+                                                $eightCatPostsThumbSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $eightCatPostsThumb->title_en)));
+                                                // dd($first_sectionSlug);
+                                            }
+                                            @endphp
+											<a href="{{ route('single.post', ['id' => $eightCatPostsThumb->id, 'slug' => $eightCatPostsThumbSlug]) }}"><img src="{{ asset($eightCatPostsThumb->image) }}" alt="Notebook"></a>
+											<h4 class="heading-02"><a href="{{ route('single.post', ['id' => $eightCatPostsThumb->id, 'slug' => $eightCatPostsThumbSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $eightCatPostsThumb->title_bn }}
                                                 @else
@@ -642,9 +804,18 @@ use Illuminate\Support\Str;
 									<div class="col-md-6 col-sm-6">
                                         @if (isset($eightCatPosts))
                                         @foreach ($eightCatPosts as $item)
+                                        @php
+                                        if (session()->get('lang') == 'bangla') {
+                                            $eightCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                                            // dd($first_sectionSlug);
+                                        } else {
+                                            $eightCatPostsSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                                            // dd($first_sectionSlug);
+                                        }
+                                        @endphp
                                         <div class="image-title">
-											<a href="#"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
-											<h4 class="heading-03"><a href="#">
+											<a href="{{ route('single.post', ['id' => $item->id, 'slug' => $eightCatPostsSlug]) }}"><img src="{{ asset($item->image) }}" alt="{{ $item->title_en }}"></a>
+											<h4 class="heading-03"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $eightCatPostsSlug]) }}">
                                                 @if (session()->get('lang')=='bangla')
                                                 {{ $item->title_bn }}
                                                 @else

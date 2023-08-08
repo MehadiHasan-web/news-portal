@@ -37,7 +37,6 @@ class HomeController extends Controller
 
         // 2nd category from posts
         $secondCategory = $categories->skip(1)->first();
-        // $postsWithSecondCategory = Post::where('cat_id', $secondCategory->id)->get();
 
         $secondCategoryBigThumbs = Post::where('cat_id', $secondCategory->id)->Where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
         $secondCategoryPosts = Post::where('cat_id', $secondCategory->id)->Where('first_section', 1)->orderBy('created_at', 'desc')->WhereNot('id', $secondCategoryBigThumbs->id)->limit(2)->get();
@@ -61,7 +60,7 @@ class HomeController extends Controller
         // 6rd posts
         $catSix = $categories->skip(5)->first();
         $sixCatPostsThumb = Post::where('cat_id', $catSix->id)->where('big_thumbnail', 1)->orderBy('created_at', 'desc')->first();
-        $sixCatPosts = Post::where('cat_id', $catSix->id)->Where('first_section', 1)->WhereNot('id', $fiveCatPostsThumb->id)->orderBy('created_at', 'desc')->limit(3)->get();
+        $sixCatPosts = Post::where('cat_id', $catSix->id)->Where('first_section', 1)->WhereNot('id', $sixCatPostsThumb->id)->orderBy('created_at', 'desc')->limit(3)->get();
 
         // 7nd category from posts
         $sevenCat = $categories->skip(6)->first();
