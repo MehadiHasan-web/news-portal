@@ -91,7 +91,7 @@ class HomeController extends Controller
         $popular = Post::orderBy('id', 'desc')->inRandomOrder()->limit(8)->get();
         $highReed = Post::orderBy('id', 'ASC')->inRandomOrder()->limit(8)->get();
 
-        // dd($latestPost);
+        // dd($catFour);
 
         return view('frontend.front.index', compact('categories', 'sco', 'social', 'livetv', 'namaz', 'websites', 'notice', 'first_section', 'latestPost', 'big_thumcat', 'firstCategory', 'limitpostbycat', 'secondCategory', 'secondCategoryBigThumbs', 'secondCategoryPosts', 'thirdCategory', 'thirdCategoryPostsThumb', 'thirdCatPosts', 'catFour', 'fourCatPostsThumb', 'fourCatPosts', 'catFive', 'fiveCatPostsThumb', 'fiveCatPosts', 'catSix', 'sixCatPostsThumb', 'sixCatPosts', 'sevenCat', 'sevenCatPostsThumb', 'sevenCatPosts', 'eightCat', 'eightCatPostsThumb', 'eightCatPosts', 'countryPostThumb', 'getDesPost', 'getDesPostThree', 'thumbPhoto', 'thumbPhotoList', 'videoThumbGallery', 'videoList', 'latest', 'popular', 'highReed'));
     }

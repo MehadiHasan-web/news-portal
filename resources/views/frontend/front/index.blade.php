@@ -131,7 +131,7 @@ use Illuminate\Support\Str;
 						<div class="row">
                             @if (isset($first_section))
                             @foreach($first_section as $post)
-                            @php
+                                @php
                                 if (session()->get('lang') == 'bangla') {
                                     $first_sectionSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $post->title_bn)));
                                     // dd($first_sectionSlug);
@@ -139,7 +139,7 @@ use Illuminate\Support\Str;
                                     $first_sectionSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $post->title_en)));
                                     // dd($first_sectionSlug);
                                 }
-                            @endphp
+                                @endphp
                             <div class="col-md-3 col-sm-3">
                                 <div class="top-news">
                                     <a href="{{ route('single.post', ['id' => $post->id, 'slug' => $first_sectionSlug]) }}"><img src="{{ URL::to($post->image) }}" alt="{{ $post->title_en }}"></a>

@@ -13,16 +13,18 @@ class SinglePostController extends Controller
     {
         $categories = Category::all();
         $post = DB::table('posts')
-            ->Join('categories', 'posts.cat_id', '=', 'categories.id')
-            ->Join('sub_categories', 'posts.subcat_id', '=', 'sub_categories.id')
+            ->leftJoin('categories', 'posts.cat_id', '=', 'categories.id')
+            ->leftJoin('sub_categories', 'posts.subcat_id', '=', 'sub_categories.id')
             ->select('posts.*', 'categories.category_bn', 'categories.category_en', 'sub_categories.sub_category_bn', 'sub_categories.sub_category_en')
             ->orderBy('created_at', 'desc')
             ->where('posts.id', $id)
             ->first();
 
-        // $morePost = Post::where('cat_id', $post->cat_id)->get();
+        $ThreePost = Post::where('cat_id', $post->cat_id)->whereNot('id', $post->id)->orderBy('created_at', 'desc')->limit(3)->get();
+        $moreThreePost = Post::where('cat_id', $post->cat_id)->whereNot('id', $post->id)->skip(3)->orderBy('created_at', 'desc')->limit(3)->get();
 
-        // dd($morePost);
-        return view('frontend.front.singlePost', compact('categories', 'post'));
+
+        // dd($ThreePost);
+        return view('frontend.front.singlePost', compact('categories', 'post', 'ThreePost', 'moreThreePost'));
     }
 }

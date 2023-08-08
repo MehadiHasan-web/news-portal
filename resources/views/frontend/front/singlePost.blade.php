@@ -53,45 +53,51 @@
             <!-- ********* -->
             <div class="row">
                 <div class="col-md-12"><h2 class="heading">{{ session()->get('lang')=='bangla'?'আরো সংবাদ':'More News' }}</h2></div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="top-news sng-border-btm">
-                        <a href="#"><img src="{{ asset('frontend/assets/img/news.jpg')}}" alt="Notebook"></a>
-                        <h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+
+                @if (isset($ThreePost))
+                    @foreach ($ThreePost as $item)
+                    @php
+                        if (session()->get('lang') == 'bangla') {
+                        $ThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                        // dd($first_sectionSlug);
+                    } else {
+                        $ThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                        // dd($first_sectionSlug);
+                    }
+                    @endphp
+
+                    <div class="col-md-4 col-sm-4 mb-3">
+                        <div class="top-news sng-border-btm">
+                            <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $ThreePostSlug]) }}"><img src="{{ asset($item->image)}}" alt="{{ $item->title_en }}" />
+                            <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $ThreePostSlug]) }}">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="top-news sng-border-btm">
-                        <a href="#"><img src="{{ asset('frontend/assets/img/news.jpg')}}" alt="Notebook"></a>
-                        <h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="top-news sng-border-btm">
-                        <a href="#"><img src="{{ asset('frontend/assets/img/news.jpg')}}" alt="Notebook"></a>
-                        <h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
+
             </div>
+            @if (isset($moreThreePost))
             <div class="row">
+                @foreach ($moreThreePost as $item)
+                @php
+                        if (session()->get('lang') == 'bangla') {
+                        $moreThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                        // dd($first_sectionSlug);
+                    } else {
+                        $moreThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                        // dd($first_sectionSlug);
+                    }
+                @endphp
                 <div class="col-md-4 col-sm-4">
-                    <div class="top-news">
-                        <a href="#"><img src="{{ asset('frontend/assets/img/news.jpg')}}" alt="Notebook"></a>
-                        <h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
+                    <div class="top-news sng-border-btm">
+                        <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $moreThreePostSlug]) }}"><img src="{{ asset($item->image)}}" alt="{{ $item->title_en }}" />
+                        <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $moreThreePostSlug]) }}">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="top-news">
-                        <a href="#"><img src="{{ asset('frontend/assets/img/news.jpg')}}" alt="Notebook"></a>
-                        <h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="top-news">
-                        <a href="#"><img src="{{ asset('frontend/assets/img/news.jpg')}}" alt="Notebook"></a>
-                        <h4 class="heading-02"><a href="#">লালমনিরহাটে আওয়ামী লীগ কার্যালয়ে ভাঙচুর</a> </h4>
-                    </div>
-                </div>
+                @endforeach
             </div>
+            @endif
         </div>
         <div class="col-md-4 col-sm-4">
             <!-- add-start -->
