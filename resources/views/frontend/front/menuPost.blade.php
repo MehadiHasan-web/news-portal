@@ -1,72 +1,145 @@
 @extends('frontend.master.master')
  @section('content')
+ @php
+ use Illuminate\Support\Str;
+ @endphp
+
+ @php
+    function bn_date($str)
+    {
+    $en = array(1,2,3,4,5,6,7,8,9,0);
+    $bn = array('১','২','৩','৪','৫','৬','৭',' ৮','৯','০');
+    $str = str_replace($en, $bn, $str);
+    $en = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', ' December');
+    $en_short = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+    $bn = array( 'জানুয়ারী', 'ফেব্রুয়ারী', 'মার্চ', 'এরিল', 'মে', 'জুন', 'জুলাই', 'অগাস্ট', 'সেপটেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর');
+    $str = str_replace( $en, $bn, $str);
+    $str = str_replace( $en_short, $bn, $str);
+    $en = array('Saturday','Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday');
+    $en_short = array('Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri');
+    $bn_short = array('শনি', 'রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র');
+    $bn = array('শনিবার','রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার' );
+    $str = str_replace( $en, $bn, $str);
+    $str = str_replace($en_short, $bn_short, $str);
+    $en = array('am', 'pm');
+    $bn = array( 'পূর্বাহ্ন', 'অপরাহ্ন' );
+    $str = str_replace($en, $bn, $str);
+    $str = str_replace( $en_short, $bn_short, $str);
+    $en = array('১২', '২৪');
+    $bn = array('৬','১২');
+    $str = str_replace( $en, $bn, $str);
+    return $str;
+    }
+    @endphp
+
+    <section>
+    	<div class="container-fluid">
+    		<div class="row">
+    			<div class="col-md-12 col-sm-12">
+					<div class="date">
+						<ul>
+                            <script type="text/javascript" src="http://bangladate.appspot.com/index2.php"></script>
+							<li><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                @if (session()->get('lang')=='bangla')
+                                ঢাকা
+                                @else
+                                  Dhaka
+                                @endif
+                            </li>
+							<li><i class="fa fa-calendar" aria-hidden="true"></i>
+                                @if (session()->get('lang')=='bangla')
+                                {{ bn_date(date('d M Y,l,h:i:s a'))}}
+                                @else
+                                {{ date('d M Y,l,h:i:s a')}}
+                                @endif
+                            </li>
+							<li><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                @if (session()->get('lang')=='bangla')
+                                আপডেট ৫ মিনিট আগে
+                                @else
+                                Updated 5 minutes ago
+                                @endif
+                            </li>
+						</ul>
+
+					</div>
+				</div>
+    		</div>
+    	</div>
+    </section><!-- /.date-close -->
+
+	<!-- notice-start -->
+@if (isset($notice) && $notice->status == 1)
+
+    <section>
+    	<div class="container-fluid">
+			<div class="row scroll">
+				<div class="col-md-2 col-sm-3 scroll_01 ">
+					@if (session()->get('lang')=='bangla')
+                    শিরোনাম :
+                    @else
+                    Title :
+                    @endif
+				</div>
+				<div class="col-md-10 col-sm-9 scroll_02">
+					<marquee>
+                        @if (session()->get('lang')=='bangla')
+                            {{ $notice->notice_bn }}
+                        @else
+                            {{ $notice->notice }}
+                        @endif
+                    </marquee>
+				</div>
+			</div>
+    	</div>
+    </section>
+@endif
 
 <!-- single-page-start -->
-
 <section class="single-page">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb">
                    <li><a href="#"><i class="fa fa-home"></i></a></li>
-                    <li><a href="#"></a>{{ session()->get('lang') == 'bangla'?$post->category_bn:$post->category_en }}</li>
-                    <li><a href="#">{{session()->get('lang') == 'bangla'? $post->sub_category_bn:$post->sub_category_en }}</a></li>
+                    <li class="text-uppercase">{{ session()->get('lang') == 'bangla'?$slugName:$slugName}}</li>
                 </ol>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <header class="headline-header margin-bottom-10">
-                    <h1 class="headline">‘{{ session()->get('lang')=='bangla'?$post->title_bn:$post->title_en }}’</h1>
-                </header>
 
 
-             <div class="article-info margin-bottom-20">
-              <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                     <ul class="list-inline">
-                     <li>অন্যদৃষ্টি  অনলাইন </li>     <li><i class="fa fa-clock-o"></i>{{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</li>
-                     </ul>
-
-                    </div>
-
-                </div>
-             </div>
-        </div>
-      </div>
       <!-- ******** -->
       <div class="row">
         <div class="col-md-8 col-sm-8">
-            <div class="single-news">
-                <img src="{{ asset($post->image)}}" alt="{{ $post->title_en }}" />
-                <h4 class="caption"> বাংলাদেশে করোনাভাইরাসের পরীক্ষা ব্যাপকহারে করা এবং চিকিৎসা ব্যবস্থা নিয়ে প্রশ্ন থাকছেই। - ছবি : বিবিসি </h4>
-                <p class="text-justify">{!! session()->get('lang')=='bangla'? $post->details_bn:$post->details_en !!}</p>
-            </div>
 
-            {{--facebook comment  --}}
-            <div class="mb-3">
-                <div class="fb-comments" data-href="{{ Request::url() }}" data-width="" data-numposts="5"></div>
-            </div>
+
+
             <!-- ********* -->
             <div class="row">
-                <div class="col-md-12"><h2 class="heading">{{ session()->get('lang')=='bangla'?'আরো সংবাদ':'More News' }}</h2></div>
+                <div class="col-md-12"><h2 class="heading">{{ session()->get('lang')=='bangla'?'সংবাদ':'Reed News' }}</h2></div>
 
-                @if (isset($ThreePost))
-                    @foreach ($ThreePost as $item)
+                @if (isset($posts))
+                    @foreach ($posts as $item)
                     @php
                         if (session()->get('lang') == 'bangla') {
-                        $ThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
+                        $itemSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
                         // dd($first_sectionSlug);
                     } else {
-                        $ThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
+                        $itemSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
                         // dd($first_sectionSlug);
                     }
                     @endphp
 
                     <div class="col-md-4 col-sm-4 mb-3">
                         <div class="top-news sng-border-btm">
-                            <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $ThreePostSlug]) }}"><img src="{{ asset($item->image)}}" alt="{{ $item->title_en }}" />
-                            <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $ThreePostSlug]) }}">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
+                            <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $itemSlug]) }}"><img src="{{ asset($item->image)}}" alt="{{ $item->title_en }}" />
+                            <h4 class="heading-02" style="height: 70px;"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $itemSlug]) }}">
+                                    @if (session()->get('lang')=='bangla')
+                                        {!! Str::words($item->title_bn, 10, '...') !!}
+                                        @else
+                                        {!! Str::words($item->title_en, 10, '...') !!}
+                                    @endif
+                                </a> </h4>
                         </div>
                     </div>
                     @endforeach
@@ -74,35 +147,10 @@
 
 
             </div>
-            @if (isset($moreThreePost))
-            <div class="row">
-                @foreach ($moreThreePost as $item)
-                @php
-                        if (session()->get('lang') == 'bangla') {
-                        $moreThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_bn)));
-                        // dd($first_sectionSlug);
-                    } else {
-                        $moreThreePostSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $item->title_en)));
-                        // dd($first_sectionSlug);
-                    }
-                @endphp
-                <div class="col-md-4 col-sm-4">
-                    <div class="top-news sng-border-btm">
-                        <a href="{{ route('single.post', ['id' => $item->id, 'slug' => $moreThreePostSlug]) }}"><img src="{{ asset($item->image)}}" alt="{{ $item->title_en }}" />
-                        <h4 class="heading-02"><a href="{{ route('single.post', ['id' => $item->id, 'slug' => $moreThreePostSlug]) }}">{{ session()->get('lang')=='bangla'?$item->title_bn:$item->title_en }}</a> </h4>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            @endif
+
         </div>
         <div class="col-md-4 col-sm-4">
-            <!-- add-start -->
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="sidebar-add"><img src="{{ asset('frontend/assets/img/add_01.jpg') }}" alt="" /></div>
-                    </div>
-                </div><!-- /.add-close -->
+
             <div class="tab-header">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-justified" role="tablist">

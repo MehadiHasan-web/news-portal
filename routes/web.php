@@ -68,9 +68,12 @@ Route::post('/logout', function () {
 // frontend route
 
 Route::group([], function () {
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
     Route::get('/language/english', [HomeController::class, "English"])->name('language.english');
     Route::get('/language/bangla', [HomeController::class, "Bangla"])->name('language.bangla');
     // single post
     Route::get('/post/{id}/{slug}', [SinglePostController::class, 'SinglePost'])->name('single.post');
+    //menu post
+    Route::get('/posts/{id}/{slug}', [HomeController::class, 'menuCatPost'])->name('menu.catSearch');
+    Route::get('/posts/{id}/{slug}', [HomeController::class, 'menuSubCatPost'])->name('menu.subcatSearch');
 });

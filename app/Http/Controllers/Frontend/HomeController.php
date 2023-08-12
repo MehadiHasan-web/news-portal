@@ -87,7 +87,7 @@ class HomeController extends Controller
 
         // the latest news
         $latest = Post::orderBy('id', 'desc')->limit(8)->get();
-        $popular = Post::orderBy('id', 'desc')->inRandomOrder()->limit(8)->get();
+        $popular = Post::orderBy('id', 'desc')->skip(4)->inRandomOrder()->limit(8)->get();
         $highReed = Post::orderBy('id', 'ASC')->inRandomOrder()->limit(8)->get();
 
         // dd($catFour);
@@ -107,5 +107,37 @@ class HomeController extends Controller
         session()->forget('lang');
         session()->put('lang', 'bangla');
         return redirect()->back();
+    }
+
+    public function menuCatPost($id, $slug)
+    {
+        $categories = Category::all();
+        $posts = Post::where('cat_id', $id)->get();
+
+        $slugName = $slug;
+        // the latest news
+        $latest = Post::orderBy('id', 'desc')->limit(8)->get();
+        $popular = Post::orderBy('id', 'desc')->skip(4)->inRandomOrder()->limit(8)->get();
+        $highReed = Post::orderBy('id', 'ASC')->inRandomOrder()->limit(8)->get();
+
+        $notice = DB::table('notices')->first();
+        // dd($posts);
+        return view('frontend.front.menuPost', compact('categories', 'posts', 'latest', 'popular', 'highReed', 'slugName', 'notice'));
+    }
+
+    public function menuSubCatPost($id, $slug)
+    {
+        $categories = Category::all();
+        $posts = Post::where('subcat_id', $id)->get();
+
+        $slugName = $slug;
+        // the latest news
+        $latest = Post::orderBy('id', 'desc')->limit(8)->get();
+        $popular = Post::orderBy('id', 'desc')->skip(4)->inRandomOrder()->limit(8)->get();
+        $highReed = Post::orderBy('id', 'ASC')->inRandomOrder()->limit(8)->get();
+
+        $notice = DB::table('notices')->first();
+        // dd($posts);
+        return view('frontend.front.menuPost', compact('categories', 'posts', 'latest', 'popular', 'highReed', 'slugName', 'notice'));
     }
 }

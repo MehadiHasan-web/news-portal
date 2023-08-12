@@ -20,11 +20,15 @@ class SinglePostController extends Controller
             ->where('posts.id', $id)
             ->first();
 
-        $ThreePost = Post::where('cat_id', $post->cat_id)->whereNot('id', $post->id)->orderBy('created_at', 'desc')->limit(3)->get();
+        $ThreePost = Post::inRandomOrder()->whereNot('id', $post->id)->orderBy('created_at', 'desc')->limit(3)->get();
         $moreThreePost = Post::where('cat_id', $post->cat_id)->whereNot('id', $post->id)->skip(3)->orderBy('created_at', 'desc')->limit(3)->get();
 
+        // the latest news
+        $latest = Post::orderBy('id', 'desc')->limit(8)->get();
+        $popular = Post::orderBy('id', 'desc')->skip(4)->inRandomOrder()->limit(8)->get();
+        $highReed = Post::orderBy('id', 'ASC')->inRandomOrder()->limit(8)->get();
 
         // dd($ThreePost);
-        return view('frontend.front.singlePost', compact('categories', 'post', 'ThreePost', 'moreThreePost'));
+        return view('frontend.front.singlePost', compact('categories', 'post', 'ThreePost', 'moreThreePost', 'latest', 'popular', 'highReed'));
     }
 }

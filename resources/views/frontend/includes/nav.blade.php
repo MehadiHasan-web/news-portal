@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col-xs-6 col-md-2 col-sm-4">
 					<div class="header_logo">
-						<a href=""><img src="{{ asset('frontend/assets/img/demo_logo.png') }}"></a>
+						<a href="{{ route('frontend.home') }}"><img src="{{ asset('frontend/assets/img/demo_logo.png') }}"></a>
 					</div>
 				</div>
 				<div class="col-xs-6 col-md-8 col-sm-8">
@@ -28,23 +28,46 @@
                                                 $subcategories = DB::table('sub_categories')->where('category_id',$category->id)->get();
                                             @endphp
 
+                                                @php
+                                                if (session()->get('lang') == 'bangla') {
+                                                $categorySlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $category->category_bn)));
+                                                // dd($first_sectionSlug);
+                                                } else {
+                                                $categorySlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $category->category_en)));
+                                                // dd($first_sectionSlug);
+                                                }
+                                                @endphp
+
 											<li class="dropdown">
                                                 @if (session()->get('lang')=='bangla')
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ $category->category_bn }} </b></a>
+                                                <a href="{{ route('menu.catSearch', ['id' => $category->id, 'slug' => $categorySlug]) }}" class="dropdown-toggle" >{{ $category->category_bn }} </b></a>
                                                 @else
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ $category->category_en }} </b></a>
+                                                <a href="{{ route('menu.catSearch', ['id' => $category->id, 'slug' => $categorySlug]) }}" class="dropdown-toggle" >{{ $category->category_en }} </b></a>
                                                 @endif
 
-											<ul class="dropdown-menu">
+											@if (isset($subcategories))
+                                            <ul class="dropdown-menu">
                                                 @foreach ($subcategories as $subcategory)
+
+                                                @php
+                                                if (session()->get('lang') == 'bangla') {
+                                                $subcategorySlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $subcategory->sub_category_bn)));
+                                                // dd($first_sectionSlug);
+                                                } else {
+                                                $subcategorySlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-\x{0980}-\x{09FF}]+/u', '-', $subcategory->sub_category_en)));
+                                                // dd($first_sectionSlug);
+                                                }
+                                                @endphp
+
+
                                                    @if (session()->get('lang')=='bangla')
-                                                   <li><a href="#">{{ $subcategory->sub_category_bn }}</a></li>
+                                                   <li><a href="">{{ $subcategory->sub_category_bn }}</a></li>
                                                    @else
-                                                   <li><a href="#">{{ $subcategory->sub_category_en }}</a></li>
+                                                   <li><a href="">{{ $subcategory->sub_category_en }}</a></li>
                                                    @endif
                                                 @endforeach
-
 											</ul>
+                                            @endif
 											</li>
                                         @endforeach
 
